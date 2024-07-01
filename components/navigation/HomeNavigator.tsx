@@ -13,9 +13,7 @@ export default function HomeStackScreen() {
                 name="Statistiques"
                 component={HomeScreen}
                 options={{
-                    headerStyle: {
-                        backgroundColor: 'transparent',
-                    },
+                    headerShadowVisible: false,
                 }}
             />
             <HomeStack.Screen
@@ -23,9 +21,8 @@ export default function HomeStackScreen() {
                 component={CarRaceStatisticDetails}
                 options={{
                     title: '',
-                    headerStyle: {
-                        backgroundColor: 'transparent',
-                    },
+                    headerBackTitle: 'Retour',
+                    headerShadowVisible: false,
                 }}
             />
         </HomeStack.Navigator>

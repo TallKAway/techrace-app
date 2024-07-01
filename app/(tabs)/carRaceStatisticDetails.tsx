@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginLeft: 16,
+        marginRight: 16,
     },
     header: {
         marginTop: 32,
