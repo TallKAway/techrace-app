@@ -1,7 +1,7 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import CarRaceStatisticDetails from '../../app/(tabs)/carRaceStatisticDetails';
 import HomeScreen from '../../app/(tabs)/index';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function HomeStackScreen() {
     const HomeStack = createNativeStackNavigator();

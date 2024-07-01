@@ -1,6 +1,6 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import CarRace from '../../app/(tabs)/carRace';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 export default function CarRaceStackScreen() {
     const CarRaceStack = createNativeStackNavigator();
