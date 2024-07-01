@@ -32,7 +32,13 @@ export default function RootLayout() {
         <QueryClientProvider client={queryClient}>
             <ThemeProvider value={ColorTheme}>
                 <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{
+                            headerShown: false,
+                           
+                        }}
+                    />
                 </Stack>
             </ThemeProvider>
         </QueryClientProvider>

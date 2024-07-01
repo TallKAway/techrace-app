@@ -1,18 +1,32 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import StatisticsElement from '@/components/ui/StatisticsElement';
+import Color from '@/styles/constants/Colors';
 
 export default function CarRaceStatisticDetails() {
     return (
         <View style={styles.container}>
-            <Text>Car Race Details Screen</Text>
+            <View style={styles.header}>
+                <Text style={styles.title}>Mardi 19 Mai 2024</Text>
+            </View>
+            <View>
+                <StatisticsElement />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
         flex: 1,
-        justifyContent: 'center',
+        marginLeft: 16,
+    },
+    header: {
+        marginTop: 32,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: Color.text,
     },
 });
