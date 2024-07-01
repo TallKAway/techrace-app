@@ -1,6 +1,8 @@
 import React from 'react';
-import Color from '@/styles/constants/Colors';
+
 import { StyleSheet, Text, View } from 'react-native';
+
+import Color from '@/styles/constants/Colors';
 
 export default function StatisticsElement() {
     return (
@@ -24,26 +26,26 @@ export default function StatisticsElement() {
 }
 const styles = StyleSheet.create({
     container: {
-        marginTop: 32,
-        padding: 16,
         flexDirection: 'row',
         justifyContent: 'center',
+        marginTop: 32,
+        padding: 16,
+    },
+    separator: {
+        backgroundColor: Color.greyText,
+        height: '100%',
+        marginLeft: 16,
+        marginRight: 16,
+        width: 2,
     },
     statsElement: {
         alignItems: 'center',
-    },
-    titleElement: {
-        fontSize: 12,
     },
     textElement: {
         fontSize: 22,
         fontWeight: 'bold',
     },
-    separator: {
-        height: '100%',
-        width: 2,
-        marginLeft: 16,
-        marginRight: 16,
-        backgroundColor: Color.greyText,
+    titleElement: {
+        fontSize: 12,
     },
 });

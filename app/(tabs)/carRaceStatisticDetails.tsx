@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+
 import StatisticsElement from '@/components/ui/StatisticsElement';
 import Color from '@/styles/constants/Colors';
 
@@ -25,8 +26,8 @@ const styles = StyleSheet.create({
         marginTop: 32,
     },
     title: {
+        color: Color.text,
         fontSize: 24,
         fontWeight: 'bold',
-        color: Color.text,
     },
 });
