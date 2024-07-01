@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Color from '@/styles/constants/Colors';
+
 import { useGetStatisticsDetails } from '@/api/ressources/statisticsDetails/statisticsDetails';
+import Color from '@/styles/constants/Colors';
 
 export default function StatisticsElement() {
     // TODO : Fetch data from the API, this is an example of how to use the useGetStatisticsDetails hook
@@ -41,17 +42,17 @@ const styles = StyleSheet.create({
         marginRight: 16,
         width: 1,
     },
+    titleElement: {
+        fontSize: 12,
+    },
     titleStatsElement: {
-        fontSize: 11,
-        color: Color.greyText,
         alignItems: 'center',
+        color: Color.greyText,
+        fontSize: 11,
     },
     valueStatsElement: {
         color: Color.greyText,
         fontSize: 22,
         fontWeight: 'bold',
-    },
-    titleElement: {
-        fontSize: 12,
     },
 });

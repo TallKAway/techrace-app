@@ -1,7 +1,6 @@
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 export const useGetStatisticsDetails = () =>
-    
     useQuery({
         queryKey: ['statisticsDetails'],
         queryFn: () =>
@@ -24,6 +23,3 @@ export const useGetStatisticsDetails = () =>
                 return response.json();
             }),
     });
-    
-
-
