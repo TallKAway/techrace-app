@@ -1,7 +1,11 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
-export default function TabTwoScreen() {
-    return <View style={styles.container}></View>;
+export default function CarRace() {
+    return (
+        <View style={styles.container}>
+            <Text>TEST</Text>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
