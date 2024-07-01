@@ -34,6 +34,15 @@ export default function TabLayout() {
                     ),
                 }}
             />
+            <Tabs.Screen
+                name="carRaceStatisticDetails"
+                options={{
+                    title: 'Course',
+                    tabBarIcon: ({ color, focused }) => (
+                        <TabBarIcon name={focused ? 'car' : 'car-outline'} color={color} />
+                    ),
+                }}
+            />
         </Tabs>
     );
 }

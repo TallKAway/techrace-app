@@ -17,3 +17,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
+
+// const HomeStack = createNativeStackNavigator();
+
+// export default function HomeStackScreen() {
+//     return (
+//         <HomeStack.Navigator>
+//             <HomeStack.Screen name="Home" component={HomeScreen} />
+//             <HomeStack.Screen name="Details" component={CarRaceStatisticDetails} />
+//         </HomeStack.Navigator>
+//     );
+// }
