@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
-import HomeStackScreen from '@/components/navigation/HomeNavigator';
 import CarRaceStackScreen from '@/components/navigation/CarRaceNavigator';
+import HomeStackScreen from '@/components/navigation/HomeNavigator';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 
 export default function TabLayout() {
