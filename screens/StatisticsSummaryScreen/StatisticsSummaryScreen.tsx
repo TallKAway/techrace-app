@@ -16,23 +16,34 @@ export default function StatisticsSummaryScreen() {
 
     return (
         <View style={styles.container}>
-            <Badge status="Connecté" />
-            <Badge status="Déconnecté" />
-            <Button
-                title="Go to Summary"
-                onPress={
-                    // TODO : Ajouter ici la navigation vers la page de Car Race Détails
-                    () => navigation.navigate('CarRaceStatisticDetails')
-                }
-            />
+            <View style={styles.statusContainer}>
+                <Badge status="Connecté" />
+            </View>
+            <View style={styles.cardContainer}>
+                <Button
+                    title="Go to Summary"
+                    onPress={
+                        // TODO : Ajouter ici la navigation vers la page de Car Race Détails
+                        () => navigation.navigate('CarRaceStatisticDetails')
+                    }
+                />
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    cardContainer: {
+        alignItems: 'flex-end',
+        flex: 4,
+    },
     container: {
-        alignItems: 'center',
         flex: 1,
         justifyContent: 'center',
+    },
+    statusContainer: {
+        alignItems: 'flex-end',
+        flex: 1,
+        paddingTop: 20,
     },
 });
