@@ -1,8 +1,9 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import CarRaceStackScreen from '@/components/navigation/CarRaceNavigator';
-import HomeStackScreen from '@/components/navigation/HomeNavigator';
+import CarRaceNavigator from './CarRaceNavigator';
+import HomeStackNavigator from './HomeStackNavigator';
+
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import Colors from '@/styles/constants/Colors';
 
@@ -18,8 +19,8 @@ export default function TabLayout() {
             }}
         >
             <Tab.Screen
-                name="MainStatistic"
-                component={HomeStackScreen}
+                name="HomeStackNavigator"
+                component={HomeStackNavigator}
                 options={{
                     title: 'Statistiques',
                     tabBarIcon: ({ color, focused }) => (
@@ -31,8 +32,8 @@ export default function TabLayout() {
                 }}
             />
             <Tab.Screen
-                name="CarRace"
-                component={CarRaceStackScreen}
+                name="CarRaceNavigator"
+                component={CarRaceNavigator}
                 options={{
                     title: 'Course',
                     tabBarIcon: ({ color, focused }) => (

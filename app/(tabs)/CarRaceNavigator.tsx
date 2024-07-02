@@ -1,16 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import CarRace from '../../app/(tabs)/carRace';
+import CarRaceScreen from '../../screens/CarRaceScreen/CarRaceScreen';
 
-export default function CarRaceStackScreen() {
+export default function CarRaceNavigator() {
     const CarRaceStack = createNativeStackNavigator();
 
     return (
         <CarRaceStack.Navigator>
             <CarRaceStack.Screen
                 name="Course"
-                component={CarRace}
+                component={CarRaceScreen}
                 options={{
                     headerStyle: {
                         backgroundColor: 'transparent',
