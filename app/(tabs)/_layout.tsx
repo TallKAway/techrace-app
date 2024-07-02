@@ -1,20 +1,26 @@
-import { Tabs } from 'expo-router';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
+
+import CarRaceNavigator from './CarRaceNavigator';
+import HomeStackNavigator from './HomeStackNavigator';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import Colors from '@/styles/constants/Colors';
 
 export default function TabLayout() {
+    const Tab = createBottomTabNavigator();
+
     return (
-        <Tabs
+        <Tab.Navigator
             screenOptions={{
                 tabBarActiveTintColor: Colors.primary,
-                headerShown: true,
+                headerShown: false,
                 tabBarShowLabel: false,
             }}
         >
-            <Tabs.Screen
-                name="index"
+            <Tab.Screen
+                name="HomeStackNavigator"
+                component={HomeStackNavigator}
                 options={{
                     title: 'Statistiques',
                     tabBarIcon: ({ color, focused }) => (
@@ -25,8 +31,9 @@ export default function TabLayout() {
                     ),
                 }}
             />
-            <Tabs.Screen
-                name="carRace"
+            <Tab.Screen
+                name="CarRaceNavigator"
+                component={CarRaceNavigator}
                 options={{
                     title: 'Course',
                     tabBarIcon: ({ color, focused }) => (
@@ -34,6 +41,6 @@ export default function TabLayout() {
                     ),
                 }}
             />
-        </Tabs>
+        </Tab.Navigator>
     );
 }

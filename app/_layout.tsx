@@ -2,6 +2,7 @@ import { ThemeProvider } from '@react-navigation/native';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
@@ -31,7 +32,12 @@ export default function RootLayout() {
         <QueryClientProvider client={queryClient}>
             <ThemeProvider value={ColorTheme}>
                 <Stack>
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{
+                            headerShown: false,
+                        }}
+                    />
                 </Stack>
             </ThemeProvider>
         </QueryClientProvider>
