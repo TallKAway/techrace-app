@@ -2,7 +2,7 @@ import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 export type ScreenStackNavigatorParamList = {
     MainStatistics: undefined;
-    CarRaceStatisticDetails: undefined;
+    StatisticsDetails: undefined;
     CarRace: undefined;
 };
 export type ScreenStackBottomNavigatorParamList = {
