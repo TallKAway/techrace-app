@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { useGetStatisticsDetails } from '../../api/ressources/statistics-details/statisticsDetails';
+import ChartLineElement from '../../components/design-system/ChartLineElement';
 import StatisticsElement from '../../components/design-system/StatisticsElement';
 
 import Color from '../../styles/constants/Colors';
@@ -18,6 +19,9 @@ export default function CarRaceStatisticDetails() {
             </View>
             <View>
                 <StatisticsElement />
+            </View>
+            <View>
+                <ChartLineElement title="Vitesse Moyenne (m/s)" />
             </View>
         </View>
     );
