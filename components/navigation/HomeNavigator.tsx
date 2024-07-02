@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 
-import CarRaceStatisticDetails from '../../app/(tabs)/carRaceStatisticDetails';
 import HomeScreen from '../../app/(tabs)/index';
 
 export default function HomeStackScreen() {
@@ -16,15 +15,7 @@ export default function HomeStackScreen() {
                     headerShadowVisible: false,
                 }}
             />
-            <HomeStack.Screen
-                name="CarRaceStatisticDetails"
-                component={CarRaceStatisticDetails}
-                options={{
-                    title: 'Statistiques Details',
-                    headerBackTitle: 'Retour',
-                    headerShadowVisible: false,
-                }}
-            />
+            {/* Ajouter ici les différentes Stacks de Home */}
         </HomeStack.Navigator>
     );
 }

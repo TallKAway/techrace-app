@@ -1,6 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, Text, Button } from 'react-native';
+
 import { ScreenStackBottomNavigatorProps } from '../domains/navigation';
+
 import { useGetRaces } from '@/api/ressources/races/races';
 
 export default function HomeScreen() {
@@ -15,7 +17,10 @@ export default function HomeScreen() {
             <Text>Home Screen</Text>
             <Button
                 title="Go to Details"
-                onPress={() => navigation.navigate('CarRaceStatisticDetails')}
+                onPress={
+                    // Ajouter ici la navigation vers la page de Car Race Détails
+                    () => navigation.navigate('CarRaceStatisticDetails')
+                }
             />
         </View>
     );
