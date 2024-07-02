@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import StatisticsElement from '@/components/ui/StatisticsElement';
 import Color from '@/styles/constants/Colors';
 import { useGetStatisticsDetails } from '@/api/ressources/statisticsDetails/statisticsDetails';
+import StatisticsElement from '@/components/design-system/StatisticsElement';
 
 export default function CarRaceStatisticDetails() {
     // TODO : Fetch data from the API, this is an example of how to use the useGetStatisticsDetails hook

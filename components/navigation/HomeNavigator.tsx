@@ -20,7 +20,7 @@ export default function HomeStackScreen() {
                 name="CarRaceStatisticDetails"
                 component={CarRaceStatisticDetails}
                 options={{
-                    title: '',
+                    title: 'Statistiques Details',
                     headerBackTitle: 'Retour',
                     headerShadowVisible: false,
                 }}
