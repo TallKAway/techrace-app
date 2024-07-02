@@ -18,7 +18,7 @@ export default function HomeScreen() {
             <Button
                 title="Go to Details"
                 onPress={
-                    // Ajouter ici la navigation vers la page de Car Race Détails
+                    // TODO : Ajouter ici la navigation vers la page de Car Race Détails
                     () => navigation.navigate('CarRaceStatisticDetails')
                 }
             />

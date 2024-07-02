@@ -15,7 +15,7 @@ export default function HomeStackScreen() {
                     headerShadowVisible: false,
                 }}
             />
-            {/* Ajouter ici les différentes Stacks de Home */}
+            {/* TODO : Ajouter ici les différentes Stacks de Home */}
         </HomeStack.Navigator>
     );
 }
