@@ -6,7 +6,7 @@ const greyText = 'rgba(60, 60, 67, 0.6)';
 const greyBanner = 'rgba(99, 99, 99, 0.7)';
 const transparent = 'transparent';
 
-const primaryLight20 = '#CCE5FF';
+const primaryLight20 = 'rgba(204, 229, 255, 0.2)';
 const primaryLight = '#80BFFF';
 const primary = '#1E90FF';
 const primaryDark = '#0059B3';
