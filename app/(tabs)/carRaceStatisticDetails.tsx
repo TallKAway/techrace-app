@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Color from '@/styles/constants/Colors';
 import { useGetStatisticsDetails } from '@/api/ressources/statisticsDetails/statisticsDetails';
 import StatisticsElement from '@/components/design-system/StatisticsElement';
+import Color from '@/styles/constants/Colors';
 
 export default function CarRaceStatisticDetails() {
     // TODO : Fetch data from the API, this is an example of how to use the useGetStatisticsDetails hook
     const { data } = useGetStatisticsDetails();
     console.log(data);
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
