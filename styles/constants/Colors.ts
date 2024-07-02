@@ -14,10 +14,12 @@ const primaryDark = '#0059B3';
 const secondaryLight = '#FFEC80';
 const secondary = '#FFD700';
 
+const accentLightFade = 'rgba(255, 69, 0, 0.15)';
 const accentLight = '#FF8F66';
 const accent = '#FF4500';
 const accentDark = '#802200';
 
+const greenLightFade = 'rgba(76, 175, 80, 0.15)';
 const green = '#4CAF50';
 const white = '#FFFFFF';
 
@@ -34,9 +36,11 @@ const Colors = {
     primaryDark: primaryDark,
     secondaryLight: secondaryLight,
     secondary: secondary,
+    accentLightFade: accentLightFade,
     accentLight: accentLight,
     accent: accent,
     accentDark: accentDark,
+    greenLightFade: greenLightFade,
     green: green,
     white: white,
 };

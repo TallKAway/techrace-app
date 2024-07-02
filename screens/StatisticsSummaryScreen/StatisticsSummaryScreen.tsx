@@ -1,9 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, View, Text, Button } from 'react-native';
+
+import { Button, StyleSheet, View } from 'react-native';
 
 import { ScreenStackBottomNavigatorProps } from '../../app/domains/navigation';
 
 import { useGetRaces } from '@/api/ressources/races/races';
+import Badge from '@/components/design-system/Badge/Badge';
 
 export default function StatisticsSummaryScreen() {
     // TODO : Fetch data from the API, this is an example of how to use the useGetRaces hook
@@ -14,7 +16,8 @@ export default function StatisticsSummaryScreen() {
 
     return (
         <View style={styles.container}>
-            <Text>Home Screen</Text>
+            <Badge status="Connecté" />
+            <Badge status="Déconnecté" />
             <Button
                 title="Go to Summary"
                 onPress={
