@@ -3,11 +3,11 @@ import { StyleSheet, View, StyleProp, ViewStyle, Pressable } from 'react-native'
 import Colors from '@/styles/constants/Colors';
 
 type ControlButtonProps = {
-    style?: StyleProp<ViewStyle> | null;
-    direction?: string | undefined;
+    style: StyleProp<ViewStyle>;
+    direction: string;
 };
 
-const ControlButton: React.FC<ControlButtonProps> = ({ style, direction }) => {
+const ControlButton = ({ style, direction }: ControlButtonProps) => {
     const goUp = function () {
         console.log('goUp');
     };
@@ -21,7 +21,7 @@ const ControlButton: React.FC<ControlButtonProps> = ({ style, direction }) => {
         console.log('goRight');
     };
 
-    const moveControl = function (direction: string | undefined) {
+    const moveControl = function (direction: string) {
         switch (direction) {
             case 'up':
                 goUp();
