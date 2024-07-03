@@ -1,8 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-
-import { Button, StyleSheet, View } from 'react-native';
-
-import { ScreenStackBottomNavigatorProps } from '../../app/domains/navigation';
+import { StyleSheet, View } from 'react-native';
 
 import { useGetRaces } from '@/api/ressources/races/races';
 import Badge from '@/components/design-system/Badge/Badge';
@@ -13,8 +9,6 @@ export default function StatisticsSummaryScreen() {
     const { data } = useGetRaces();
     console.log(data);
 
-    const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
-
     return (
         <View style={styles.container}>
             <View style={styles.statusContainer}>
@@ -22,13 +16,6 @@ export default function StatisticsSummaryScreen() {
             </View>
             <View style={styles.cardContainer}>
                 <StatisticsSummaryCard />
-                <Button
-                    title="Go to Summary"
-                    onPress={
-                        // TODO : Ajouter ici la navigation vers la page de Car Race Détails
-                        () => navigation.navigate('CarRaceStatisticDetails')
-                    }
-                />
             </View>
         </View>
     );
