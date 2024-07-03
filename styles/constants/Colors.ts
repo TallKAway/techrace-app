@@ -4,6 +4,7 @@ const border = '#C7C7CC';
 const text = '#040509';
 const greyText = 'rgba(60, 60, 67, 0.6)';
 const greyBanner = 'rgba(99, 99, 99, 0.7)';
+const transparent = 'transparent';
 
 const primaryLight20 = '#CCE5FF';
 const primaryLight = '#80BFFF';
@@ -24,6 +25,7 @@ const Colors = {
     text: text,
     greyText: greyText,
     greyBanner: greyBanner,
+    transparent: transparent,
     background: background,
     border: border,
     primaryLight20: primaryLight20,

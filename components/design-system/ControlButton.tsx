@@ -1,16 +1,53 @@
-import { StyleSheet, View, StyleProp, ViewStyle } from 'react-native';
+import { StyleSheet, View, StyleProp, ViewStyle, Pressable } from 'react-native';
 
 import Colors from '@/styles/constants/Colors';
 
 type ControlButtonProps = {
     style?: StyleProp<ViewStyle> | null;
+    direction?: string | undefined;
 };
 
-const ControlButton: React.FC<ControlButtonProps> = ({ style }) => {
+const ControlButton: React.FC<ControlButtonProps> = ({ style, direction }) => {
+    const goUp = function () {
+        console.log('goUp');
+    };
+    const goDown = function () {
+        console.log('goDown');
+    };
+    const goLeft = function () {
+        console.log('goLeft');
+    };
+    const goRight = function () {
+        console.log('goRight');
+    };
+
+    const moveControl = function (direction: string | undefined) {
+        switch (direction) {
+            case 'up':
+                goUp();
+                break;
+
+            case 'down':
+                goDown();
+                break;
+
+            case 'left':
+                goLeft();
+                break;
+
+            case 'right':
+                goRight();
+                break;
+
+            default:
+                break;
+        }
+    };
+
     return (
-        <View style={[styles.button, style]}>
+        <Pressable onPress={() => moveControl(direction)} style={[styles.button, style]}>
             <View style={styles.triangle}></View>
-        </View>
+        </Pressable>
     );
 };
 
@@ -19,18 +56,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderColor: Colors.primary,
         borderRadius: 100,
-        borderWidth: 6,
+        borderWidth: 4,
         height: 72,
         justifyContent: 'center',
         width: 72,
     },
-    // eslint-disable-next-line react-native/no-color-literals
+
     triangle: {
         borderBottomColor: Colors.primary,
         borderBottomWidth: 30,
-        borderLeftColor: 'transparent',
+        borderLeftColor: Colors.transparent,
         borderLeftWidth: 17,
-        borderRightColor: 'transparent',
+        borderRightColor: Colors.transparent,
         borderRightWidth: 17,
         marginBottom: 7,
         width: 30,

@@ -22,12 +22,21 @@ export default function CarRaceScreen() {
             </View>
             <View style={styles.controlButtonsWrapper}>
                 <View>
-                    <ControlButton style={styles.controlButton} />
-                    <ControlButton style={[styles.controlButton, styles.rotatedBackButton]} />
+                    <ControlButton direction="up" style={styles.controlButton} />
+                    <ControlButton
+                        direction="down"
+                        style={[styles.controlButton, styles.rotatedBackButton]}
+                    />
                 </View>
                 <View style={styles.horizontalControl}>
-                    <ControlButton style={[styles.controlButton, styles.rotatedLeftButton]} />
-                    <ControlButton style={[styles.controlButton, styles.rotatedRightButton]} />
+                    <ControlButton
+                        direction="left"
+                        style={[styles.controlButton, styles.rotatedLeftButton]}
+                    />
+                    <ControlButton
+                        direction="right"
+                        style={[styles.controlButton, styles.rotatedRightButton]}
+                    />
                 </View>
             </View>
         </View>
@@ -35,49 +44,6 @@ export default function CarRaceScreen() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        flex: 1,
-        margin: 25,
-        width: '100%',
-    },
-    // eslint-disable-next-line react-native/no-color-literals, react-native/no-unused-styles
-    controlScreen: {
-        alignItems: 'center',
-        borderColor: Colors.primary,
-        borderRadius: 32,
-        borderWidth: 6,
-        height: '51.64%',
-        justifyContent: 'center',
-        marginBottom: 28,
-        marginTop: 79, // TODO : temporary until connected banner
-        width: '90%',
-    },
-    // eslint-disable-next-line react-native/no-color-literals, react-native/no-unused-styles, react-native/sort-styles
-    controlButtonsWrapper: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        height: '36.39%',
-        justifyContent: 'space-around',
-        width: '90%',
-    },
-    horizontalControl: {
-        flexDirection: 'row',
-    },
-    rotatedBackButton: {
-        transform: [{ rotate: '60deg' }],
-    },
-    rotatedRightButton: {
-        transform: [{ rotate: '90deg' }],
-    },
-    rotatedLeftButton: {
-        transform: [{ rotate: '30deg' }],
-    },
-    // eslint-disable-next-line react-native/no-unused-styles
-    controlButton: {
-        margin: 10,
-    },
-    // eslint-disable-next-line react-native/no-color-literals
     chrono: {
         alignItems: 'center',
         backgroundColor: Colors.white,
@@ -86,15 +52,42 @@ const styles = StyleSheet.create({
         borderWidth: 4,
         height: 76,
         justifyContent: 'center',
-        left: '38%',
+        left: '50%',
         position: 'absolute',
         top: '-8%',
+        transform: [{ translateX: '-50%' }],
         width: 76,
         zIndex: 4,
     },
     chronoText: {
         color: Colors.primary,
         fontWeight: 'bold',
+    },
+    container: {
+        alignItems: 'center',
+        flex: 1,
+        padding: 16,
+        width: '100%',
+    },
+    controlButton: {
+        margin: 10,
+    },
+    controlButtonsWrapper: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        height: 248,
+        justifyContent: 'space-around',
+        width: '100%',
+    },
+    controlScreen: {
+        alignItems: 'center',
+        borderColor: Colors.primary,
+        borderRadius: 32,
+        borderWidth: 6,
+        justifyContent: 'center',
+        marginBottom: 28,
+        minHeight: 352,
+        width: '100%',
     },
     detailsBanner: {
         alignItems: 'center',
@@ -111,15 +104,27 @@ const styles = StyleSheet.create({
         top: -1,
         zIndex: -6,
     },
-    detailsBannerText: {
-        color: Colors.white,
-        marginBottom: 2,
-        marginHorizontal: 3,
-    },
     detailsBannerBatteryWrapper: {
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginHorizontal: 5,
+    },
+    detailsBannerText: {
+        color: Colors.white,
+        marginBottom: 2,
+        marginHorizontal: 3,
+    },
+    horizontalControl: {
+        flexDirection: 'row',
+    },
+    rotatedBackButton: {
+        transform: [{ rotate: '60deg' }],
+    },
+    rotatedLeftButton: {
+        transform: [{ rotate: '30deg' }],
+    },
+    rotatedRightButton: {
+        transform: [{ rotate: '90deg' }],
     },
 });
