@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { queryClient } from '@/api/ressources/utils/react-query';
+import { SocketProvider } from '@/shared/providers/SocketContext';
 import { ColorTheme } from '@/styles/ColorTheme';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -31,14 +32,16 @@ export default function RootLayout() {
     return (
         <QueryClientProvider client={queryClient}>
             <ThemeProvider value={ColorTheme}>
-                <Stack>
-                    <Stack.Screen
-                        name="(tabs)"
-                        options={{
-                            headerShown: false,
-                        }}
-                    />
-                </Stack>
+                <SocketProvider>
+                    <Stack>
+                        <Stack.Screen
+                            name="(tabs)"
+                            options={{
+                                headerShown: false,
+                            }}
+                        />
+                    </Stack>
+                </SocketProvider>
             </ThemeProvider>
         </QueryClientProvider>
     );

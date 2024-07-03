@@ -2,9 +2,14 @@ import { StyleSheet, View, Text } from 'react-native';
 
 import ControlButton from '@/components/design-system/ControlButton';
 import BatteryIcon from '@/components/design-system/icons/Battery';
+import { useSocket } from '@/shared/providers/SocketContext';
 import Colors from '@/styles/constants/Colors';
 
 export default function CarRaceScreen() {
+    const socket = useSocket();
+
+    console.log(socket);
+
     return (
         <View style={styles.container}>
             <View style={styles.controlScreen}>
