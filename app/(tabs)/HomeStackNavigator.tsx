@@ -8,14 +8,7 @@ export default function HomeStackNavigator() {
 
     return (
         <HomeStack.Navigator>
-            <HomeStack.Screen
-                name="Statistiques"
-                component={StatisticsSummaryScreen}
-                options={{
-                    headerShadowVisible: false,
-                    headerShown: false,
-                }}
-            />
+            <HomeStack.Screen name="Statistiques" component={StatisticsSummaryScreen} />
             {/* TODO : Ajouter ici les différentes Stacks de Home */}
         </HomeStack.Navigator>
     );

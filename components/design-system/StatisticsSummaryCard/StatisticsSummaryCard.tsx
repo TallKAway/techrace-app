@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: Colors.primaryLight20,
         borderRadius: 13,
+        marginBottom: 16,
         padding: 16,
         width: '100%',
     },
