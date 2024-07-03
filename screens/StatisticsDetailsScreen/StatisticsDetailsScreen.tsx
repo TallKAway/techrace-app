@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import { useGetStatisticsDetails } from '../../api/ressources/statistics-details/statisticsDetails';
 import LineChartElement from '../../components/design-system/LineChart/LineChartElement';
@@ -24,17 +24,19 @@ export default function CarRaceStatisticDetails() {
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
-                <Text style={styles.title}>Mardi 19 Mai 2024</Text>
-            </View>
+        <SafeAreaView style={styles.container}>
             <View>
-                <StatisticsElement />
+                <View style={styles.header}>
+                    <Text style={styles.title}>Mardi 19 Mai 2024</Text>
+                </View>
+                <View>
+                    <StatisticsElement />
+                </View>
+                <View>
+                    <LineChartElement title="Vitesse Moyenne (m/s)" data={linedata} />
+                </View>
             </View>
-            <View>
-                <LineChartElement title="Vitesse Moyenne (m/s)" data={linedata} />
-            </View>
-        </View>
+        </SafeAreaView>
     );
 }
 
