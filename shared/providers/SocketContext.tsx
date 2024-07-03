@@ -1,4 +1,3 @@
-// src/shared/providers/socketContext.ts
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 interface WebSocketContextProps {
