@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import Color from '../../styles/constants/Colors';
+import Color from '../../../styles/constants/Colors';
 
 export default function StatisticsElement() {
     return (
