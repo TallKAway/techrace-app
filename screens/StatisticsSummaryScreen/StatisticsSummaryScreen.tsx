@@ -1,42 +1,126 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, SafeAreaView, Animated } from 'react-native';
 
 import { useGetRaces } from '@/api/ressources/races/races';
 import Badge from '@/components/design-system/Badge/Badge';
+import LineChartElement from '@/components/design-system/LineChart/LineChartElement';
 import StatisticsSummaryCard from '@/components/design-system/StatisticsSummaryCard/StatisticsSummaryCard';
 import Colors from '@/styles/constants/Colors';
 
 export default function StatisticsSummaryScreen() {
-    // TODO : Fetch data from the API, this is an example of how to use the useGetRaces hook
+    const navigation = useNavigation();
+    const [showHeader, setShowHeader] = useState(false);
+    const scrollY = new Animated.Value(0);
+
+    // Fetch data from the API, this is an example of how to use the useGetRaces hook
     const { data } = useGetRaces();
     console.log(data);
 
+    // Récuperer les données depuis l'API, c'est un exemple de ce que peut renvoyer le hook useGetRaces. Remplacer lineData par les données récupérées dans data
+    const linedata = {
+        labels: ['00:00', '05:00', '10:00', '15:00', '20:00', '25:00'],
+        datasets: [
+            {
+                data: [20, 45, 28, 80, 99, 43],
+                strokeWidth: 1, // optional
+            },
+        ],
+    };
+
+    useEffect(() => {
+        navigation.setOptions({
+            headerShown: true,
+            headerShadowVisible: false,
+            headerTitleStyle: {
+                color: showHeader ? Colors.text : 'transparent',
+                opacity: showHeader ? 0 : 1,
+            },
+            title: 'Statistiques',
+        });
+    }, [showHeader, navigation]);
+
+    const animatedHeaderHeight = scrollY.interpolate({
+        inputRange: [0, 50],
+        outputRange: [50, 0],
+        extrapolate: 'clamp',
+    });
+
+    const animatedHeaderOpacity = scrollY.interpolate({
+        inputRange: [0, 50],
+        outputRange: [1, 0],
+        extrapolate: 'clamp',
+    });
+
+    const animatedTitleOpacity = scrollY.interpolate({
+        inputRange: [0, 50],
+        outputRange: [1, 0],
+        extrapolate: 'clamp',
+    });
+
     return (
-        <View style={styles.container}>
-            <View style={styles.statusContainer}>
-                <Badge status="Connecté" />
-            </View>
-            <View style={styles.graphContainer}>
-                <Text style={styles.graphTitle}>Nombre de courses effectuées</Text>
-                {/* TODO: Ajouter le graphique ici quand on aura choisi la lib */}
-                <Text>Mettre le graphique ici</Text>
-            </View>
-            {/* TODO: map les infos selon la date quand on aura les données */}
-            <View style={styles.cardContainer}>
-                <Text style={styles.date}>Aujourd'hui</Text>
-                <StatisticsSummaryCard />
-            </View>
-        </View>
+        <SafeAreaView style={styles.container}>
+            <Animated.ScrollView
+                onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {
+                    listener: (event) => {
+                        const offsetY = event.nativeEvent.contentOffset.y;
+                        if (offsetY > 50 && !showHeader) {
+                            setShowHeader(true);
+                        } else if (offsetY <= 50 && showHeader) {
+                            setShowHeader(false);
+                        }
+                    },
+                    useNativeDriver: false,
+                })}
+                scrollEventThrottle={16}
+            >
+                <View style={styles.statusContainer}>
+                    <Badge status="Connecté" />
+                </View>
+                <Animated.View
+                    style={[
+                        styles.animatedHeader,
+                        {
+                            height: animatedHeaderHeight,
+                            opacity: animatedHeaderOpacity,
+                        },
+                    ]}
+                >
+                    <Animated.Text
+                        style={[
+                            styles.graphTitle,
+                            {
+                                opacity: animatedTitleOpacity,
+                            },
+                        ]}
+                    >
+                        Statistiques
+                    </Animated.Text>
+                </Animated.View>
+                <View>
+                    <LineChartElement title="Vitesse Moyenne (m/s)" data={linedata} />
+                </View>
+                {/* TODO: map les infos selon la date quand on aura les données */}
+                <View>
+                    <Text style={styles.date}>Aujourd'hui</Text>
+                    <StatisticsSummaryCard />
+                    <StatisticsSummaryCard />
+                    <StatisticsSummaryCard />
+                    <StatisticsSummaryCard />
+                </View>
+            </Animated.ScrollView>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    cardContainer: {
-        flex: 4,
+    animatedHeader: {
+        marginBottom: 16,
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
-        padding: 16,
+        marginHorizontal: 16,
+        marginTop: 16,
     },
     date: {
         color: Colors.greyText,
@@ -44,16 +128,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: 8,
     },
-    graphContainer: {
-        flex: 2,
-    },
     graphTitle: {
         color: Colors.text,
-        fontSize: 20,
+        fontSize: 34,
         fontWeight: 'bold',
     },
     statusContainer: {
         alignItems: 'flex-end',
-        flex: 1,
+        paddingBottom: 32,
     },
 });

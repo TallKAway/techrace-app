@@ -13,6 +13,7 @@ export default function HomeStackNavigator() {
                 component={StatisticsSummaryScreen}
                 options={{
                     headerShadowVisible: false,
+                    headerShown: false,
                 }}
             />
             {/* TODO : Ajouter ici les différentes Stacks de Home */}
