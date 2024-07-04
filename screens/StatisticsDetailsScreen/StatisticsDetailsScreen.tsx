@@ -18,7 +18,7 @@ export default function CarRaceStatisticDetails() {
         datasets: [
             {
                 data: [20, 45, 28, 80, 99, 43],
-                strokeWidth: 1, // optional
+                strokeWidth: 1,
             },
         ],
     };

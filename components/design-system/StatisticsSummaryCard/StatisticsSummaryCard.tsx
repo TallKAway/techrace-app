@@ -16,9 +16,7 @@ export default function StatisticsSummaryCard({}: StatisticsSummaryCardProps) {
     return (
         <TouchableHighlight
             style={styles.button}
-            onPress={
-                () => navigation.navigate('StatisticsDetails')
-            }
+            onPress={() => navigation.navigate('StatisticsDetails')}
             underlayColor="white"
         >
             <View style={styles.container}>
