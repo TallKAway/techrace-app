@@ -13,9 +13,6 @@ type ControlButtonProps = {
 const ControlButton = ({ style, direction }: ControlButtonProps) => {
     const { socket } = useSocket();
 
-    const [currentSpeed, setCurrentSpeed] = useState(0);
-    // const [acceleratiosetCarDirectionnSpeed, setAccelerationSpeed] = useState(10);
-
     const [isMoving, setIsMoving] = useState(false);
     const [carDirection, setCarDirection] = useState('stop');
 
@@ -34,41 +31,45 @@ const ControlButton = ({ style, direction }: ControlButtonProps) => {
     };
 
     const goForward = function () {
-        if (currentSpeed < 4096) {
-            // const newSpeed = currentSpeed * accelerationSpeed;
-            // const newAcceleration = accelerationSpeed * 1.5;
-            // setCurrentSpeed(newSpeed);
-            // setAccelerationSpeed(newAcceleration);
-        } else {
-            setCurrentSpeed(4096);
-        }
-
-        console.log('Current speed : ', currentSpeed);
-
         const speedData = {
             cmd: '1',
-            data: [currentSpeed, currentSpeed, currentSpeed, currentSpeed],
+            data: [4069, 4069, 4069, 4069],
         };
         socket?.send(JSON.stringify(speedData));
         console.log('goForward');
     };
     const goBack = function () {
         console.log('goBack');
+        const speedData = {
+            cmd: '1',
+            data: [-4069, -4069, -4069, -4069],
+        };
+        socket?.send(JSON.stringify(speedData));
     };
     const goLeft = function () {
         console.log('goLeft');
+        const speedData = {
+            cmd: '1',
+            data: [0, 0, 2034, 2034],
+        };
+        socket?.send(JSON.stringify(speedData));
     };
     const goRight = function () {
         console.log('goRight');
+        const speedData = {
+            cmd: '1',
+            data: [2034, 2034, 0, 0],
+        };
+        socket?.send(JSON.stringify(speedData));
     };
 
     const stopCar = function () {
         console.log('Car stop');
-        // const speedData = {
-        //     cmd: '1',
-        //     data: [0, 0, 0, 0], top left, bottom left, top right, bottom righ
-        // };
-        // socket?.send(JSON.stringify(speedData));
+        const speedData = {
+            cmd: '1',
+            data: [0, 0, 0, 0],
+        };
+        socket?.send(JSON.stringify(speedData));
     };
 
     const moveControl = function (isMoving: boolean, direction: string) {
@@ -97,7 +98,8 @@ const ControlButton = ({ style, direction }: ControlButtonProps) => {
 
     return (
         <Pressable
-            onPressIn={() => buttonDirectionPressed()}
+            onLongPress={() => buttonDirectionPressed()}
+            delayLongPress={50}
             onPressOut={() => buttonDirectionRelease()}
             style={[styles.button, style]}
         >
