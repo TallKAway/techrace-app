@@ -2,13 +2,13 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 
-import { ScreenStackBottomNavigatorProps } from '@/app/domains/navigation';
+import { ScreenStackNavigatorProps } from '@/app/domains/navigation';
 import Badge from '@/components/design-system/Badge/Badge';
 import CheckeredFlagIcon from '@/components/design-system/icons/CheckeredFlagIcon';
 import Colors from '@/styles/constants/Colors';
 
 export default function EmptyStatisticsSummaryScreen() {
-    const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
+    const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     return (
         <SafeAreaView style={styles.container}>

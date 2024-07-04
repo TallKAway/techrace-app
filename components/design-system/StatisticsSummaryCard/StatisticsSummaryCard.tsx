@@ -5,21 +5,18 @@ import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import { ChevronIcon } from '../icons/ChevronIcon';
 import { StatisticsIcon } from '../icons/StatisticsIcon';
 
-import { ScreenStackBottomNavigatorProps } from '@/app/domains/navigation';
+import { ScreenStackNavigatorProps } from '@/app/domains/navigation';
 import Colors from '@/styles/constants/Colors';
 
 interface StatisticsSummaryCardProps {}
 
 export default function StatisticsSummaryCard({}: StatisticsSummaryCardProps) {
-    const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
+    const navigation = useNavigation<ScreenStackNavigatorProps>();
 
     return (
         <TouchableHighlight
             style={styles.button}
-            onPress={
-                // TODO : Ajouter ici la navigation vers la page de Car Race Détails
-                () => navigation.navigate('CarRaceStatisticDetails')
-            }
+            onPress={() => navigation.navigate('StatisticsDetails')}
             underlayColor="white"
         >
             <View style={styles.container}>
