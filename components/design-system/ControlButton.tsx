@@ -49,6 +49,9 @@ const ControlButton = ({ style, direction }: ControlButtonProps) => {
     const goRight = function () {
         console.log('goRight');
     };
+    const stop = function () {
+        console.log('stop');
+    };
 
     const moveControl = function (direction: string) {
         switch (direction) {
@@ -66,6 +69,10 @@ const ControlButton = ({ style, direction }: ControlButtonProps) => {
 
             case 'right':
                 goRight();
+                break;
+
+            case 'stop':
+                stop();
                 break;
 
             default:
