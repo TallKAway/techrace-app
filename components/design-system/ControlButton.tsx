@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, View, StyleProp, ViewStyle, Pressable } from 'react-native';
 
 import { useSocket } from '@/shared/providers/SocketContext';
@@ -12,16 +12,33 @@ type ControlButtonProps = {
 
 const ControlButton = ({ style, direction }: ControlButtonProps) => {
     const { socket } = useSocket();
-    const [currentSpeed, setCurrentSpeed] = useState(1);
-    const [accelerationSpeed, setAccelerationSpeed] = useState(10);
+
+    const [currentSpeed, setCurrentSpeed] = useState(0);
+    // const [acceleratiosetCarDirectionnSpeed, setAccelerationSpeed] = useState(10);
+
+    const [isMoving, setIsMoving] = useState(false);
+    const [carDirection, setCarDirection] = useState('stop');
+
+    useEffect(() => {
+        moveControl(isMoving, carDirection);
+    }, [isMoving]);
+
+    const buttonDirectionPressed = () => {
+        setCarDirection(direction);
+        setIsMoving(true);
+    };
+
+    const buttonDirectionRelease = () => {
+        setCarDirection('stop');
+        setIsMoving(false);
+    };
 
     const goForward = function () {
         if (currentSpeed < 4096) {
-            const newSpeed = currentSpeed * accelerationSpeed;
-            const newAcceleration = accelerationSpeed * 1.5;
-
-            setCurrentSpeed(newSpeed);
-            setAccelerationSpeed(newAcceleration);
+            // const newSpeed = currentSpeed * accelerationSpeed;
+            // const newAcceleration = accelerationSpeed * 1.5;
+            // setCurrentSpeed(newSpeed);
+            // setAccelerationSpeed(newAcceleration);
         } else {
             setCurrentSpeed(4096);
         }
@@ -36,11 +53,6 @@ const ControlButton = ({ style, direction }: ControlButtonProps) => {
         console.log('goForward');
     };
     const goBack = function () {
-        const speedData = {
-            cmd: '1',
-            data: [0, 0, 0, 0],
-        };
-        socket?.send(JSON.stringify(speedData));
         console.log('goBack');
     };
     const goLeft = function () {
@@ -49,39 +61,46 @@ const ControlButton = ({ style, direction }: ControlButtonProps) => {
     const goRight = function () {
         console.log('goRight');
     };
-    const stop = function () {
-        console.log('stop');
+
+    const stopCar = function () {
+        console.log('Car stop');
+        // const speedData = {
+        //     cmd: '1',
+        //     data: [0, 0, 0, 0], top left, bottom left, top right, bottom righ
+        // };
+        // socket?.send(JSON.stringify(speedData));
     };
 
-    const moveControl = function (direction: string) {
-        switch (direction) {
-            case 'up':
-                goForward();
-                break;
+    const moveControl = function (isMoving: boolean, direction: string) {
+        if (isMoving) {
+            switch (direction) {
+                case 'up':
+                    goForward();
+                    break;
 
-            case 'down':
-                goBack();
-                break;
+                case 'down':
+                    goBack();
+                    break;
 
-            case 'left':
-                goLeft();
-                break;
+                case 'left':
+                    goLeft();
+                    break;
 
-            case 'right':
-                goRight();
-                break;
-
-            case 'stop':
-                stop();
-                break;
-
-            default:
-                break;
+                case 'right':
+                    goRight();
+                    break;
+            }
+        } else {
+            stopCar();
         }
     };
 
     return (
-        <Pressable onPress={() => moveControl(direction)} style={[styles.button, style]}>
+        <Pressable
+            onPressIn={() => buttonDirectionPressed()}
+            onPressOut={() => buttonDirectionRelease()}
+            style={[styles.button, style]}
+        >
             <View style={styles.triangle}></View>
         </Pressable>
     );
