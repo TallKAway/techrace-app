@@ -24,10 +24,7 @@ export default function EmptyStatisticsSummaryScreen() {
                 </Text>
                 <TouchableHighlight
                     style={styles.button}
-                    onPress={
-                        // TODO : Ajouter ici la navigation vers la page de Car Race
-                        () => navigation.navigate('CarRace')
-                    }
+                    onPress={() => navigation.navigate('CarRaceNavigator')}
                     underlayColor={Colors.primaryLight}
                 >
                     <Text style={styles.buttonText}>Commencer une course</Text>
