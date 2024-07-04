@@ -1,13 +1,10 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import LineChartElement from '../../components/design-system/LineChart/LineChartElement';
 import StatisticsElement from '../../components/design-system/StatisticsElement/StatisticsElement';
 
 import Color from '../../styles/constants/Colors';
-
-import { ScreenStackBottomNavigatorProps } from '@/app/domains/navigation';
 
 export default function CarRaceStatisticDetails() {
  
@@ -22,8 +19,6 @@ export default function CarRaceStatisticDetails() {
         ],
     };
 
-    const navigation = useNavigation<ScreenStackBottomNavigatorProps>();
-
     return (
         <SafeAreaView style={styles.container}>
             <View>
@@ -35,14 +30,6 @@ export default function CarRaceStatisticDetails() {
                 </View>
                 <View>
                     <LineChartElement title="Vitesse Moyenne (m/s)" data={linedata} />
-
-                    <Button
-                        title="Go to Summary"
-                        onPress={
-                            // TODO : Ajouter ici la navigation vers la page de Car Race Détails
-                            () => navigation.navigate('CarRaceNavigator')
-                        }
-                    />
                 </View>
             </View>
         </SafeAreaView>
