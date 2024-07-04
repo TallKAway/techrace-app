@@ -17,7 +17,6 @@ export default function StatisticsSummaryCard({}: StatisticsSummaryCardProps) {
         <TouchableHighlight
             style={styles.button}
             onPress={
-                // TODO : Ajouter ici la navigation vers la page de Car Race Détails
                 () => navigation.navigate('StatisticsDetails')
             }
             underlayColor="white"
