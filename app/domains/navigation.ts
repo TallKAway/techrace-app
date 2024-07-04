@@ -8,7 +8,7 @@ export type ScreenStackNavigatorParamList = {
 export type ScreenStackBottomNavigatorParamList = {
     MainStatistics: undefined;
     CarRaceStatisticDetails: undefined;
-    CarRace: undefined;
+    CarRaceNavigator: undefined;
 };
 
 export type ScreenStackNavigatorProps = NativeStackNavigationProp<ScreenStackNavigatorParamList>;
