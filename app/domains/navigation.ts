@@ -7,7 +7,7 @@ export type ScreenStackNavigatorParamList = {
 };
 export type ScreenStackBottomNavigatorParamList = {
     MainStatistics: undefined;
-    CarRaceStatisticDetails: undefined;
+    StatisticsDetails: undefined;
     CarRaceNavigator: undefined;
 };
 

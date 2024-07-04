@@ -18,7 +18,7 @@ export default function StatisticsSummaryCard({}: StatisticsSummaryCardProps) {
             style={styles.button}
             onPress={
                 // TODO : Ajouter ici la navigation vers la page de Car Race Détails
-                () => navigation.navigate('CarRaceStatisticDetails')
+                () => navigation.navigate('StatisticsDetails')
             }
             underlayColor="white"
         >
