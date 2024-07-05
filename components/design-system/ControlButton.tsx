@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderColor: Colors.primary,
         borderRadius: 100,
-        borderWidth: 4,
-        height: 72,
+        borderWidth: 2,
+        height: 86,
         justifyContent: 'center',
-        width: 72,
+        width: 86,
     },
 
     triangle: {
@@ -99,7 +99,6 @@ const styles = StyleSheet.create({
         borderRightColor: Colors.transparent,
         borderRightWidth: 17,
         marginBottom: 7,
-        width: 30,
     },
 });
 

@@ -21,6 +21,10 @@ export default function CarRaceScreen() {
                 </View>
             </View>
             <View style={styles.controlButtonsWrapper}>
+                <ControlButton
+                    direction="left"
+                    style={[styles.controlButton, styles.rotatedLeftButton]}
+                />
                 <View>
                     <ControlButton direction="up" style={styles.controlButton} />
                     <ControlButton
@@ -28,16 +32,11 @@ export default function CarRaceScreen() {
                         style={[styles.controlButton, styles.rotatedBackButton]}
                     />
                 </View>
-                <View style={styles.horizontalControl}>
-                    <ControlButton
-                        direction="left"
-                        style={[styles.controlButton, styles.rotatedLeftButton]}
-                    />
-                    <ControlButton
-                        direction="right"
-                        style={[styles.controlButton, styles.rotatedRightButton]}
-                    />
-                </View>
+
+                <ControlButton
+                    direction="right"
+                    style={[styles.controlButton, styles.rotatedRightButton]}
+                />
             </View>
         </View>
     );
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         borderColor: Colors.primary,
         borderRadius: 100,
-        borderWidth: 4,
+        borderWidth: 2,
         height: 76,
         justifyContent: 'center',
         position: 'absolute',
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         flex: 1,
+        justifyContent: 'space-between',
         padding: 16,
         width: '100%',
     },
@@ -73,17 +73,17 @@ const styles = StyleSheet.create({
     controlButtonsWrapper: {
         alignItems: 'center',
         flexDirection: 'row',
-        height: 248,
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         width: '100%',
     },
     controlScreen: {
         alignItems: 'center',
         borderColor: Colors.primary,
         borderRadius: 32,
-        borderWidth: 6,
+        borderWidth: 2,
         justifyContent: 'center',
         marginBottom: 28,
+        marginTop: 10,
         minHeight: 352,
         width: '100%',
     },
@@ -112,9 +112,6 @@ const styles = StyleSheet.create({
         color: Colors.white,
         marginBottom: 2,
         marginHorizontal: 3,
-    },
-    horizontalControl: {
-        flexDirection: 'row',
     },
     rotatedBackButton: {
         transform: [{ rotate: '60deg' }],
