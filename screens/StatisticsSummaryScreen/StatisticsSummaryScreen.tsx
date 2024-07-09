@@ -14,17 +14,20 @@ import { useGetRaces } from '@/api/ressources/races/races';
 import Badge from '@/components/design-system/Badge/Badge';
 import LineChartElement from '@/components/design-system/LineChart/LineChartElement';
 import StatisticsSummaryCard from '@/components/design-system/StatisticsSummaryCard/StatisticsSummaryCard';
+import { useSocket } from '@/shared/providers/SocketContext';
 import Colors from '@/styles/constants/Colors';
 
 export default function StatisticsSummaryScreen() {
     const navigation = useNavigation();
-
-    const [showHeader, setShowHeader] = useState(false);
-    const scrollY = new Animated.Value(0);
-
-    // Fetch data from the API, this is an example of how to use the useGetRaces hook
+    const { socket } = useSocket();
     const { data } = useGetRaces();
     console.log(data);
+
+    const [showHeader, setShowHeader] = useState(false);
+
+    const scrollY = new Animated.Value(0);
+
+    const socketConnection = socket?.readyState === 1 ? 'Connecté' : 'Déconnecté';
 
     // Récuperer les données depuis l'API, c'est un exemple de ce que peut renvoyer le hook useGetRaces. Remplacer lineData par les données récupérées dans data
     const linedata = {
@@ -71,7 +74,7 @@ export default function StatisticsSummaryScreen() {
                 scrollEventThrottle={16}
             >
                 <View style={styles.statusContainer}>
-                    <Badge status="Connecté" />
+                    <Badge status={socketConnection} />
                 </View>
                 <View>
                     <Animated.Text
