@@ -21,7 +21,7 @@ export default function StatisticsSummaryScreen() {
     const navigation = useNavigation();
     const { socket } = useSocket();
     const { data } = useGetRaces();
-    console.log(data);
+    console.log('data', data);
 
     const [showHeader, setShowHeader] = useState(false);
 

@@ -1,14 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 
-export const useGetRaces = () =>
-    useQuery({
-        queryKey: ['races'],
+export const useGetRaces = () => {
+    const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
+    const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
+    return useQuery({
+        queryKey: ['races', API_KEY, API_URL],
         queryFn: () =>
-            fetch('/api/races', {
+            fetch(`${API_URL}/race/all`, {
                 body: null,
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'x-api-key': `${API_KEY}`,
                 },
             }).then((response) => {
                 if (!response.ok) {
@@ -23,3 +27,4 @@ export const useGetRaces = () =>
                 return response.json();
             }),
     });
+};
