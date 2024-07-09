@@ -1,100 +1,115 @@
-import { useState, useEffect } from 'react';
 import { StyleSheet, View, StyleProp, ViewStyle, Pressable } from 'react-native';
 
-import { useSocket } from '@/shared/providers/SocketContext';
+// import { useSocket } from '@/shared/providers/SocketContext';
 
 import Colors from '@/styles/constants/Colors';
 
 type ControlButtonProps = {
     style: StyleProp<ViewStyle>;
     direction: string;
+    setLeftRightDir: (direction: string) => void;
+    setFowardBackwardDir: (direction: string) => void;
 };
 
-const ControlButton = ({ style, direction }: ControlButtonProps) => {
-    const { socket } = useSocket();
+const ControlButton = ({
+    style,
+    direction,
+    setLeftRightDir,
+    setFowardBackwardDir,
+}: ControlButtonProps) => {
+    // const { socket } = useSocket();
 
-    const [isMoving, setIsMoving] = useState(false);
-    const [carDirection, setCarDirection] = useState('stop');
+    // const [isMoving, setIsMoving] = useState(false);
+    // const [carDirection, setCarDirection] = useState('stop');
 
-    useEffect(() => {
-        moveControl(isMoving, carDirection);
-    }, [isMoving]);
+    // useEffect(() => {
+    //     moveControl(isMoving, carDirection);
+    // }, [isMoving]);
 
     const buttonDirectionPressed = () => {
-        setCarDirection(direction);
-        setIsMoving(true);
+        if (direction == 'forward' || direction == 'backward') setFowardBackwardDir(direction);
+
+        if (direction == 'left' || direction == 'right') setLeftRightDir(direction);
+
+        // setCarDirection(direction);
+        // setIsMoving(true);
     };
 
     const buttonDirectionRelease = () => {
-        setCarDirection('stop');
-        setIsMoving(false);
+        if (direction == 'forward' || direction == 'backward')
+            setFowardBackwardDir('not going forward or backward');
+
+        if (direction == 'left' || direction == 'right') setLeftRightDir('not going left or right');
+        // setLeftRightDir('stop');
+        // setCarDirection('stop');
+        // setIsMoving(false);
     };
 
-    const goForward = function () {
-        const speedData = {
-            cmd: '1',
-            data: [4069, 4069, 4069, 4069],
-        };
-        socket?.send(JSON.stringify(speedData));
-        console.log('goForward');
-    };
-    const goBack = function () {
-        console.log('goBack');
-        const speedData = {
-            cmd: '1',
-            data: [-4069, -4069, -4069, -4069],
-        };
-        socket?.send(JSON.stringify(speedData));
-    };
-    const goLeft = function () {
-        console.log('goLeft');
-        const speedData = {
-            cmd: '1',
-            data: [0, 0, 2034, 2034],
-        };
-        socket?.send(JSON.stringify(speedData));
-    };
-    const goRight = function () {
-        console.log('goRight');
-        const speedData = {
-            cmd: '1',
-            data: [2034, 2034, 0, 0],
-        };
-        socket?.send(JSON.stringify(speedData));
-    };
+    // const goForward = function () {
+    //     const speedData = {
+    //         cmd: '1',
+    //         data: [4069, 4069, 4069, 4069],
+    //     };
+    //     socket?.send(JSON.stringify(speedData));
+    //     console.log('goForward');
+    // };
+    // const goBack = function () {
+    //     console.log('goBack');
+    //     const speedData = {
+    //         cmd: '1',
+    //         data: [-4069, -4069, -4069, -4069],
+    //     };
+    //     socket?.send(JSON.stringify(speedData));
+    // };
+    // const goLeft = function () {
+    //     console.log('goLeft');
+    //     const speedData = {
+    //         cmd: '1',
+    //         data: [0, 0, 2034, 2034],
+    //     };
+    //     socket?.send(JSON.stringify(speedData));
+    // };
+    // const goRight = function () {
+    //     console.log('goRight');
+    //     const speedData = {
+    //         cmd: '1',
+    //         data: [2034, 2034, 0, 0],
+    //     };
+    //     socket?.send(JSON.stringify(speedData));
+    // };
 
-    const stopCar = function () {
-        console.log('Car stop');
-        const speedData = {
-            cmd: '1',
-            data: [0, 0, 0, 0],
-        };
-        socket?.send(JSON.stringify(speedData));
-    };
+    // const stopCar = function () {
+    //     console.log('Car stop');
+    //     const speedData = {
+    //         cmd: '1',
+    //         data: [0, 0, 0, 0],
+    //     };
+    //     socket?.send(JSON.stringify(speedData));
+    // };
 
-    const moveControl = function (isMoving: boolean, direction: string) {
-        if (isMoving) {
-            switch (direction) {
-                case 'up':
-                    goForward();
-                    break;
+    // const moveControl = function (isMoving: boolean, direction: string) {
+    //     if (isMoving) {
+    //         switch (direction) {
+    //             case 'up':
+    //                 goForward();
+    //                 break;
 
-                case 'down':
-                    goBack();
-                    break;
+    //             case 'down':
+    //                 goBack();
+    //                 break;
 
-                case 'left':
-                    goLeft();
-                    break;
+    //             case 'left':
+    //                 goLeft();
+    //                 break;
 
-                case 'right':
-                    goRight();
-                    break;
-            }
-        } else {
-            stopCar();
-        }
-    };
+    //             case 'right':
+    //                 goRight();
+    //                 break;
+    //         }
+    //     } else {
+    //         stopCar();
+    //     }
+    // };
 
     return (
         <Pressable

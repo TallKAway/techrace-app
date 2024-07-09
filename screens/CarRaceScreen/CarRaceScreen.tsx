@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import ControlButton from '@/components/design-system/ControlButton';
@@ -5,6 +6,19 @@ import BatteryIcon from '@/components/design-system/icons/Battery';
 import Colors from '@/styles/constants/Colors';
 
 export default function CarRaceScreen() {
+    const [leftRightDir, setLeftRightDir] = useState('');
+    const [forwardBackwardDir, setForwardBackwardDir] = useState('');
+
+    const leftRightDirSetter = (direction: string) => {
+        setLeftRightDir(direction);
+    };
+
+    const forwardBackwardDirSetter = (direction: string) => {
+        setForwardBackwardDir(direction);
+    };
+    console.log('horizontal : ', leftRightDir);
+    console.log('vertical : ', forwardBackwardDir);
+
     return (
         <View style={styles.container}>
             <View style={styles.controlScreen}>
@@ -22,19 +36,30 @@ export default function CarRaceScreen() {
             </View>
             <View style={styles.controlButtonsWrapper}>
                 <View>
-                    <ControlButton direction="up" style={styles.controlButton} />
                     <ControlButton
-                        direction="down"
+                        direction="forward"
+                        setLeftRightDir={leftRightDirSetter}
+                        setFowardBackwardDir={forwardBackwardDirSetter}
+                        style={styles.controlButton}
+                    />
+                    <ControlButton
+                        direction="backward"
+                        setLeftRightDir={leftRightDirSetter}
+                        setFowardBackwardDir={forwardBackwardDirSetter}
                         style={[styles.controlButton, styles.rotatedBackButton]}
                     />
                 </View>
                 <View style={styles.horizontalControl}>
                     <ControlButton
                         direction="left"
+                        setLeftRightDir={leftRightDirSetter}
+                        setFowardBackwardDir={forwardBackwardDirSetter}
                         style={[styles.controlButton, styles.rotatedLeftButton]}
                     />
                     <ControlButton
                         direction="right"
+                        setLeftRightDir={leftRightDirSetter}
+                        setFowardBackwardDir={forwardBackwardDirSetter}
                         style={[styles.controlButton, styles.rotatedRightButton]}
                     />
                 </View>
