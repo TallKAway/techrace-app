@@ -8,16 +8,16 @@ export default function CarRaceScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.controlScreen}>
-                <View style={styles.chrono}>
-                    <Text style={styles.chronoText}>0</Text>
-                    <Text style={styles.chronoText}>Kmh</Text>
-                </View>
                 <View style={styles.detailsBanner}>
                     <Text style={styles.detailsBannerText}>0:03:53s</Text>
                     <View style={styles.detailsBannerBatteryWrapper}>
-                        <Text style={styles.detailsBannerText}>84%</Text>
                         <BatteryIcon />
+                        <Text style={styles.detailsBannerText}>84%</Text>
                     </View>
+                </View>
+                <View style={styles.chrono}>
+                    <Text style={styles.chronoText}>0</Text>
+                    <Text style={styles.chronoText}>Kmh</Text>
                 </View>
             </View>
             <View style={styles.controlButtonsWrapper}>
@@ -28,16 +28,14 @@ export default function CarRaceScreen() {
                         style={[styles.controlButton, styles.rotatedBackButton]}
                     />
                 </View>
-                <View style={styles.horizontalControl}>
-                    <ControlButton
-                        direction="left"
-                        style={[styles.controlButton, styles.rotatedLeftButton]}
-                    />
-                    <ControlButton
-                        direction="right"
-                        style={[styles.controlButton, styles.rotatedRightButton]}
-                    />
-                </View>
+                <ControlButton
+                    direction="left"
+                    style={[styles.controlButton, styles.rotatedLeftButton]}
+                />
+                <ControlButton
+                    direction="right"
+                    style={[styles.controlButton, styles.rotatedRightButton]}
+                />
             </View>
         </View>
     );
@@ -49,7 +47,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         borderColor: Colors.primary,
         borderRadius: 100,
-        borderWidth: 4,
+        borderWidth: 2,
         height: 76,
         justifyContent: 'center',
         position: 'absolute',
@@ -64,6 +62,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         flex: 1,
+        justifyContent: 'space-between',
         padding: 16,
         width: '100%',
     },
@@ -73,29 +72,27 @@ const styles = StyleSheet.create({
     controlButtonsWrapper: {
         alignItems: 'center',
         flexDirection: 'row',
-        height: 248,
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         width: '100%',
     },
     controlScreen: {
         alignItems: 'center',
         borderColor: Colors.primary,
         borderRadius: 32,
-        borderWidth: 6,
+        borderWidth: 2,
         justifyContent: 'center',
         marginBottom: 28,
+        marginTop: 10,
         minHeight: 352,
         width: '100%',
     },
     detailsBanner: {
         alignItems: 'center',
-        backgroundColor: Colors.greyBanner,
-        borderTopLeftRadius: 32,
-        borderTopRightRadius: 32,
         flexDirection: 'row',
         height: 30,
         justifyContent: 'space-between',
         left: -1,
+        marginHorizontal: 20,
         paddingHorizontal: 20,
         position: 'absolute',
         right: 0,
@@ -104,17 +101,16 @@ const styles = StyleSheet.create({
     },
     detailsBannerBatteryWrapper: {
         alignItems: 'center',
+        borderTopLeftRadius: 32,
+        borderTopRightRadius: 32,
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginHorizontal: 5,
     },
     detailsBannerText: {
-        color: Colors.white,
+        color: Colors.primary,
         marginBottom: 2,
         marginHorizontal: 3,
-    },
-    horizontalControl: {
-        flexDirection: 'row',
     },
     rotatedBackButton: {
         transform: [{ rotate: '60deg' }],
