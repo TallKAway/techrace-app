@@ -24,7 +24,7 @@ export default function CarRaceScreen() {
             <View style={styles.controlScreen}>
                 <View style={styles.chrono}>
                     <Text style={styles.chronoText}>0</Text>
-                    <Text style={styles.chronoText}>Kmh</Text>
+                    <Text style={styles.chronoText}>Km/h</Text>
                 </View>
                 <View style={styles.detailsBanner}>
                     <Text style={styles.detailsBannerText}>0:03:53s</Text>
