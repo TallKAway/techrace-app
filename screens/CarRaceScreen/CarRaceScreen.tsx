@@ -1,23 +1,61 @@
+// import { useState } from 'react';
+import 'react-native-gesture-handler';
 import { useState } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import ControlButton from '@/components/design-system/ControlButton';
+import {
+    GestureHandlerRootView,
+    GestureHandlerStateChangeEvent,
+    State,
+    TapGestureHandler,
+} from 'react-native-gesture-handler';
+
+// import { GestureHandlerRootView } from 'react-native-gesture-handler';
+// import { TouchableHighlight } from 'react-native-gesture-handler';
+
+// import ControlButton from '@/components/design-system/ControlButton';
 import BatteryIcon from '@/components/design-system/icons/Battery';
 import Colors from '@/styles/constants/Colors';
 
 export default function CarRaceScreen() {
-    const [leftRightDir, setLeftRightDir] = useState('');
-    const [forwardBackwardDir, setForwardBackwardDir] = useState('');
+    // const pressUp = () => console.log('up');
+    // const pressDown = () => console.log('down');
 
-    const leftRightDirSetter = (direction: string) => {
-        setLeftRightDir(direction);
+    // const pressLeft = () => console.log('left');
+
+    // const pressRight = () => console.log('right');
+
+    // const outPress = () => console.log('btn not pressed');
+
+    const [button1Pressed, setButton1Pressed] = useState(false);
+    const [button2Pressed, setButton2Pressed] = useState(false);
+
+    const handleButton1Event = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setButton1Pressed(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setButton1Pressed(false);
+        }
     };
 
-    const forwardBackwardDirSetter = (direction: string) => {
-        setForwardBackwardDir(direction);
+    const handleButton2Event = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setButton2Pressed(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setButton2Pressed(false);
+        }
     };
-    console.log('horizontal : ', leftRightDir);
-    console.log('vertical : ', forwardBackwardDir);
+
+    console.log('btn 1', button1Pressed);
+    console.log('btn 2', button2Pressed);
 
     return (
         <View style={styles.container}>
@@ -35,7 +73,47 @@ export default function CarRaceScreen() {
                 </View>
             </View>
             <View style={styles.controlButtonsWrapper}>
-                <View>
+                <GestureHandlerRootView style={styles.container}>
+                    <TapGestureHandler onHandlerStateChange={handleButton1Event}>
+                        <View style={[styles.button, button1Pressed && styles.buttonPressed]}>
+                            <Text style={styles.buttonText}>Button 1</Text>
+                        </View>
+                    </TapGestureHandler>
+
+                    <TapGestureHandler onHandlerStateChange={handleButton2Event}>
+                        <View style={[styles.button, button2Pressed && styles.buttonPressed]}>
+                            <Text style={styles.buttonText}>Button 2</Text>
+                        </View>
+                    </TapGestureHandler>
+                </GestureHandlerRootView>
+
+                {/* <View>
+                        <TouchableHighlight onPressIn={pressUp} onPressOut={outPress}>
+                            <ControlButton direction="forward" style={styles.controlButton} />
+                        </TouchableHighlight>
+                        <View style={styles.horizontalControl}>
+                            <TouchableHighlight onPressIn={pressLeft} onPressOut={outPress}>
+                                <ControlButton
+                                    direction="left"
+                                    style={[styles.controlButton, styles.rotatedLeftButton]}
+                                />
+                            </TouchableHighlight>
+                            <TouchableHighlight onPressIn={pressRight} onPressOut={outPress}>
+                                <ControlButton
+                                    direction="right"
+                                    style={[styles.controlButton, styles.rotatedRightButton]}
+                                />
+                            </TouchableHighlight>
+                        </View>
+                        <TouchableHighlight onPressIn={pressDown} onPressOut={outPress}>
+                            <ControlButton
+                                direction="backward"
+                                style={[styles.controlButton, styles.rotatedBackButton]}
+                            />
+                        </TouchableHighlight>
+                    </View> */}
+
+                {/* <View>
                     <ControlButton
                         direction="forward"
                         setLeftRightDir={leftRightDirSetter}
@@ -62,13 +140,27 @@ export default function CarRaceScreen() {
                         setFowardBackwardDir={forwardBackwardDirSetter}
                         style={[styles.controlButton, styles.rotatedRightButton]}
                     />
-                </View>
+                </View> */}
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    button: {
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+        height: 100,
+        justifyContent: 'center',
+        margin: 10,
+        width: 100,
+    },
+    buttonPressed: {
+        backgroundColor: Colors.primary,
+    },
+    buttonText: {
+        fontSize: 20,
+    },
     chrono: {
         alignItems: 'center',
         backgroundColor: Colors.white,
@@ -92,9 +184,9 @@ const styles = StyleSheet.create({
         padding: 16,
         width: '100%',
     },
-    controlButton: {
-        margin: 10,
-    },
+    // controlButton: {
+    //     margin: 10,
+    // },
     controlButtonsWrapper: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -138,16 +230,17 @@ const styles = StyleSheet.create({
         marginBottom: 2,
         marginHorizontal: 3,
     },
-    horizontalControl: {
-        flexDirection: 'row',
-    },
-    rotatedBackButton: {
-        transform: [{ rotate: '60deg' }],
-    },
-    rotatedLeftButton: {
-        transform: [{ rotate: '30deg' }],
-    },
-    rotatedRightButton: {
-        transform: [{ rotate: '90deg' }],
-    },
+
+    // horizontalControl: {
+    //     flexDirection: 'row',
+    // },
+    // rotatedBackButton: {
+    //     transform: [{ rotate: '60deg' }],
+    // },
+    // rotatedLeftButton: {
+    //     transform: [{ rotate: '30deg' }],
+    // },
+    // rotatedRightButton: {
+    //     transform: [{ rotate: '90deg' }],
+    // },
 });

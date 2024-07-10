@@ -7,16 +7,11 @@ import Colors from '@/styles/constants/Colors';
 type ControlButtonProps = {
     style: StyleProp<ViewStyle>;
     direction: string;
-    setLeftRightDir: (direction: string) => void;
-    setFowardBackwardDir: (direction: string) => void;
 };
 
-const ControlButton = ({
-    style,
-    direction,
-    setLeftRightDir,
-    setFowardBackwardDir,
-}: ControlButtonProps) => {
+const ControlButton = ({ style, direction }: ControlButtonProps) => {
+    console.log(direction);
+
     // const { socket } = useSocket();
 
     // const [isMoving, setIsMoving] = useState(false);
@@ -27,19 +22,16 @@ const ControlButton = ({
     // }, [isMoving]);
 
     const buttonDirectionPressed = () => {
-        if (direction == 'forward' || direction == 'backward') setFowardBackwardDir(direction);
-
-        if (direction == 'left' || direction == 'right') setLeftRightDir(direction);
-
+        // if (direction == 'forward' || direction == 'backward') setFowardBackwardDir(direction);
+        // if (direction == 'left' || direction == 'right') setLeftRightDir(direction);
         // setCarDirection(direction);
         // setIsMoving(true);
     };
 
     const buttonDirectionRelease = () => {
-        if (direction == 'forward' || direction == 'backward')
-            setFowardBackwardDir('not going forward or backward');
-
-        if (direction == 'left' || direction == 'right') setLeftRightDir('not going left or right');
+        // if (direction == 'forward' || direction == 'backward')
+        //     setFowardBackwardDir('not going forward or backward');
+        // if (direction == 'left' || direction == 'right') setLeftRightDir('not going left or right');
         // setLeftRightDir('stop');
         // setCarDirection('stop');
         // setIsMoving(false);
