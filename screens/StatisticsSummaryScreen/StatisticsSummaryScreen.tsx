@@ -30,16 +30,6 @@ export default function StatisticsSummaryScreen() {
 
     const racesByDate = data?.data;
 
-    const linedata = {
-        labels: ['22/03', '23/03', '24/03', '25/03', '26/03', '27/03'],
-        datasets: [
-            {
-                data: [2, 3, 0, 8, 9, 3],
-                strokeWidth: 1,
-            },
-        ],
-    };
-
     useEffect(() => {
         navigation.setOptions({
             headerShown: true,
@@ -50,6 +40,27 @@ export default function StatisticsSummaryScreen() {
             title: 'Statistiques',
         });
     }, [showHeader, navigation]);
+
+    if (!racesByDate) {
+        return null;
+    }
+
+    const lineGrahData = {
+        labels: racesByDate
+            ?.map(({ date }) =>
+                new Date(date).toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'numeric',
+                })
+            )
+            .slice(0, 6),
+        datasets: [
+            {
+                data: racesByDate?.map(({ races }) => races.length).slice(0, 6),
+                strokeWidth: 1,
+            },
+        ],
+    };
 
     const animatedTitleOpacity = scrollY.interpolate({
         inputRange: [0, 50],
@@ -89,10 +100,10 @@ export default function StatisticsSummaryScreen() {
                     </Animated.Text>
                 </View>
                 <View>
-                    <LineChartElement title="Nombre de courses effectuées" data={linedata} />
+                    <LineChartElement title="Nombre de courses effectuées" data={lineGrahData} />
                 </View>
 
-                {racesByDate?.map(({ date, races }) => {
+                {racesByDate.map(({ date, races }) => {
                     let formattedDate = new Date(date).toLocaleDateString('fr-FR', {
                         weekday: 'long',
                         day: 'numeric',
