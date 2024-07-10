@@ -16,6 +16,12 @@ interface StatisticsSummaryCardProps {
 export default function StatisticsSummaryCard({ race }: StatisticsSummaryCardProps) {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
 
+    const formattedDate = new Date(race.timestamp).toLocaleDateString('fr-FR');
+    const formattedDateHour = new Date(race.timestamp).toLocaleTimeString('fr-FR', {
+        hour: 'numeric',
+        minute: 'numeric',
+    });
+
     const startDate = new Date(race.start_Time).getTime();
     const endDate = new Date(race.end_Time).getTime();
     const raceTime = endDate - startDate;
@@ -35,7 +41,9 @@ export default function StatisticsSummaryCard({ race }: StatisticsSummaryCardPro
                         <StatisticsIcon />
                     </View>
                     <View>
-                        <Text style={styles.date}>{race.timestamp}</Text>
+                        <Text style={styles.date}>
+                            {formattedDate} - {formattedDateHour}
+                        </Text>
                         <View style={styles.textContainer}>
                             <Text style={styles.text}>Temps de course : {raceTimeMinutes} min</Text>
                             <Text style={styles.text}>
