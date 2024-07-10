@@ -54,6 +54,10 @@ export default function CarRaceScreen() {
         }
     };
 
+    const handleLongPress = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.preventDefault(); // Prevent default context menu
+    };
+
     console.log('btn 1', button1Pressed);
     console.log('btn 2', button2Pressed);
 
@@ -75,13 +79,19 @@ export default function CarRaceScreen() {
             <View style={styles.controlButtonsWrapper}>
                 <GestureHandlerRootView style={styles.container}>
                     <TapGestureHandler onHandlerStateChange={handleButton1Event}>
-                        <View style={[styles.button, button1Pressed && styles.buttonPressed]}>
+                        <View
+                            style={[styles.button, button1Pressed && styles.buttonPressed]}
+                            onContextMenu={handleLongPress}
+                        >
                             <Text style={styles.buttonText}>Button 1</Text>
                         </View>
                     </TapGestureHandler>
 
                     <TapGestureHandler onHandlerStateChange={handleButton2Event}>
-                        <View style={[styles.button, button2Pressed && styles.buttonPressed]}>
+                        <View
+                            style={[styles.button, button2Pressed && styles.buttonPressed]}
+                            onContextMenu={handleLongPress}
+                        >
                             <Text style={styles.buttonText}>Button 2</Text>
                         </View>
                     </TapGestureHandler>
