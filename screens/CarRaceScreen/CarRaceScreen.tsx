@@ -1,6 +1,6 @@
 // import { useState } from 'react';
 import 'react-native-gesture-handler';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 import {
@@ -14,52 +14,172 @@ import {
 // import { TouchableHighlight } from 'react-native-gesture-handler';
 
 // import ControlButton from '@/components/design-system/ControlButton';
+
 import BatteryIcon from '@/components/design-system/icons/Battery';
+import { useSocket } from '@/shared/providers/SocketContext';
 import Colors from '@/styles/constants/Colors';
 
+const durationMs = 99999;
+const maxWheelValue = 4069;
+
 export default function CarRaceScreen() {
-    // const pressUp = () => console.log('up');
-    // const pressDown = () => console.log('down');
+    const { socket } = useSocket();
 
-    // const pressLeft = () => console.log('left');
+    const [forwardButtonPressed, setForwardButtonPressed] = useState(false);
+    const [backwardButtonPressed, setBackwardButtonPressed] = useState(false);
 
-    // const pressRight = () => console.log('right');
+    const [leftButtonPressed, setLeftButtonPressed] = useState(false);
+    const [rightButtonPressed, setRightButtonPressed] = useState(false);
 
-    // const outPress = () => console.log('btn not pressed');
+    const [isMoving, setIsMoving] = useState(false);
 
-    const [button1Pressed, setButton1Pressed] = useState(false);
-    const [button2Pressed, setButton2Pressed] = useState(false);
-
-    const handleButton1Event = (event: GestureHandlerStateChangeEvent) => {
+    const handleForwardButtonEvent = (event: GestureHandlerStateChangeEvent) => {
         if (event.nativeEvent.state === State.BEGAN) {
-            setButton1Pressed(true);
+            setForwardButtonPressed(true);
+            setIsMoving(true);
         } else if (
             event.nativeEvent.state === State.END ||
             event.nativeEvent.state === State.FAILED ||
             event.nativeEvent.state === State.CANCELLED
         ) {
-            setButton1Pressed(false);
+            setForwardButtonPressed(false);
+            setIsMoving(false);
         }
     };
 
-    const handleButton2Event = (event: GestureHandlerStateChangeEvent) => {
+    const handleBackwardButtonEvent = (event: GestureHandlerStateChangeEvent) => {
         if (event.nativeEvent.state === State.BEGAN) {
-            setButton2Pressed(true);
+            setBackwardButtonPressed(true);
+            setIsMoving(true);
         } else if (
             event.nativeEvent.state === State.END ||
             event.nativeEvent.state === State.FAILED ||
             event.nativeEvent.state === State.CANCELLED
         ) {
-            setButton2Pressed(false);
+            setBackwardButtonPressed(false);
+            setIsMoving(false);
         }
     };
 
-    const handleLongPress = (event: React.MouseEvent<HTMLDivElement>) => {
-        event.preventDefault(); // Prevent default context menu
+    const handleLeftButtonEvent = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setLeftButtonPressed(true);
+            setIsMoving(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setLeftButtonPressed(false);
+            setIsMoving(false);
+        }
     };
 
-    console.log('btn 1', button1Pressed);
-    console.log('btn 2', button2Pressed);
+    const handleRightButtonEvent = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setRightButtonPressed(true);
+            setIsMoving(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setRightButtonPressed(false);
+            setIsMoving(false);
+        }
+    };
+
+    useEffect(() => {
+        setIsMoving(true);
+        carMoveControl(isMoving);
+    }, [isMoving]);
+
+    const carMoveControl = (isMoving: boolean) => {
+        let frontLeftWheelValue = 0;
+        let backLeftWheelValue = 0;
+        let frontRightWheelValue = 0;
+        let backRightWheelValue = 0;
+
+        if (isMoving) {
+            // Move forward and turn Right
+            if (forwardButtonPressed && rightButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = maxWheelValue;
+                backLeftWheelValue = maxWheelValue;
+                backRightWheelValue = 0;
+            }
+
+            // Move forward and turn Left
+            if (forwardButtonPressed && leftButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = maxWheelValue;
+                backRightWheelValue = maxWheelValue;
+                backLeftWheelValue = 0;
+            }
+
+            // Move backward and turn Right
+            if (forwardButtonPressed && rightButtonPressed) {
+                frontLeftWheelValue = -maxWheelValue;
+                frontRightWheelValue = -maxWheelValue;
+                backLeftWheelValue = -maxWheelValue;
+                backRightWheelValue = 0;
+            }
+
+            // Move backward and turn Left
+            if (forwardButtonPressed && rightButtonPressed) {
+                frontLeftWheelValue = -maxWheelValue;
+                frontRightWheelValue = -maxWheelValue;
+                backRightWheelValue = -maxWheelValue;
+                backLeftWheelValue = 0;
+            }
+
+            // Move forward
+            if (forwardButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = maxWheelValue;
+                backRightWheelValue = maxWheelValue;
+                backLeftWheelValue = maxWheelValue;
+            }
+
+            // Move backward
+            if (forwardButtonPressed) {
+                frontLeftWheelValue = -maxWheelValue;
+                frontRightWheelValue = -maxWheelValue;
+                backRightWheelValue = -maxWheelValue;
+                backLeftWheelValue = -maxWheelValue;
+            }
+            // Turn Left
+            if (rightButtonPressed) {
+                frontLeftWheelValue = 0;
+                frontRightWheelValue = maxWheelValue;
+                backRightWheelValue = maxWheelValue;
+                backLeftWheelValue = 0;
+            }
+            // Turn Right
+            if (rightButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = 0;
+                backRightWheelValue = 0;
+                backLeftWheelValue = maxWheelValue;
+            }
+        } else {
+            frontLeftWheelValue = 0;
+            backLeftWheelValue = 0;
+            frontRightWheelValue = 0;
+            backRightWheelValue = 0;
+        }
+
+        const speedData = {
+            cmd: '1',
+            data: [
+                frontLeftWheelValue,
+                backLeftWheelValue,
+                frontRightWheelValue,
+                backRightWheelValue,
+            ],
+        };
+        socket?.send(JSON.stringify(speedData));
+    };
 
     return (
         <View style={styles.container}>
@@ -78,78 +198,71 @@ export default function CarRaceScreen() {
             </View>
             <View style={styles.controlButtonsWrapper}>
                 <GestureHandlerRootView style={styles.container}>
-                    <TapGestureHandler onHandlerStateChange={handleButton1Event}>
-                        <View
-                            style={[styles.button, button1Pressed && styles.buttonPressed]}
-                            onContextMenu={handleLongPress}
-                        >
-                            <Text style={styles.buttonText}>Button 1</Text>
+                    <TapGestureHandler
+                        onHandlerStateChange={handleForwardButtonEvent}
+                        maxDurationMs={durationMs}
+                    >
+                        <View style={[styles.button, forwardButtonPressed && styles.buttonPressed]}>
+                            <Text style={styles.buttonText}>Forward</Text>
                         </View>
                     </TapGestureHandler>
 
-                    <TapGestureHandler onHandlerStateChange={handleButton2Event}>
+                    <TapGestureHandler
+                        onHandlerStateChange={handleBackwardButtonEvent}
+                        maxDurationMs={durationMs}
+                    >
                         <View
-                            style={[styles.button, button2Pressed && styles.buttonPressed]}
-                            onContextMenu={handleLongPress}
+                            style={[styles.button, backwardButtonPressed && styles.buttonPressed]}
                         >
-                            <Text style={styles.buttonText}>Button 2</Text>
+                            <Text style={styles.buttonText}>Backward</Text>
                         </View>
                     </TapGestureHandler>
+                    <View style={styles.horizontalControl}>
+                        <TapGestureHandler
+                            onHandlerStateChange={handleLeftButtonEvent}
+                            maxDurationMs={99999}
+                        >
+                            <View
+                                style={[styles.button, leftButtonPressed && styles.buttonPressed]}
+                            >
+                                <Text style={styles.buttonText}>Left</Text>
+                            </View>
+                        </TapGestureHandler>
+
+                        <TapGestureHandler
+                            onHandlerStateChange={handleRightButtonEvent}
+                            maxDurationMs={99999}
+                        >
+                            <View
+                                style={[styles.button, rightButtonPressed && styles.buttonPressed]}
+                            >
+                                <Text style={styles.buttonText}>Right</Text>
+                            </View>
+                        </TapGestureHandler>
+                    </View>
                 </GestureHandlerRootView>
 
                 {/* <View>
                         <TouchableHighlight onPressIn={pressUp} onPressOut={outPress}>
-                            <ControlButton direction="forward" style={styles.controlButton} />
                         </TouchableHighlight>
                         <View style={styles.horizontalControl}>
                             <TouchableHighlight onPressIn={pressLeft} onPressOut={outPress}>
-                                <ControlButton
-                                    direction="left"
-                                    style={[styles.controlButton, styles.rotatedLeftButton]}
-                                />
+                    
                             </TouchableHighlight>
                             <TouchableHighlight onPressIn={pressRight} onPressOut={outPress}>
-                                <ControlButton
-                                    direction="right"
-                                    style={[styles.controlButton, styles.rotatedRightButton]}
-                                />
+                        
                             </TouchableHighlight>
                         </View>
                         <TouchableHighlight onPressIn={pressDown} onPressOut={outPress}>
-                            <ControlButton
-                                direction="backward"
-                                style={[styles.controlButton, styles.rotatedBackButton]}
-                            />
+                
                         </TouchableHighlight>
                     </View> */}
 
                 {/* <View>
-                    <ControlButton
-                        direction="forward"
-                        setLeftRightDir={leftRightDirSetter}
-                        setFowardBackwardDir={forwardBackwardDirSetter}
-                        style={styles.controlButton}
-                    />
-                    <ControlButton
-                        direction="backward"
-                        setLeftRightDir={leftRightDirSetter}
-                        setFowardBackwardDir={forwardBackwardDirSetter}
-                        style={[styles.controlButton, styles.rotatedBackButton]}
-                    />
+
                 </View>
                 <View style={styles.horizontalControl}>
-                    <ControlButton
-                        direction="left"
-                        setLeftRightDir={leftRightDirSetter}
-                        setFowardBackwardDir={forwardBackwardDirSetter}
-                        style={[styles.controlButton, styles.rotatedLeftButton]}
-                    />
-                    <ControlButton
-                        direction="right"
-                        setLeftRightDir={leftRightDirSetter}
-                        setFowardBackwardDir={forwardBackwardDirSetter}
-                        style={[styles.controlButton, styles.rotatedRightButton]}
-                    />
+
                 </View> */}
             </View>
         </View>
@@ -241,9 +354,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 3,
     },
 
-    // horizontalControl: {
-    //     flexDirection: 'row',
-    // },
+    horizontalControl: {
+        flexDirection: 'row',
+    },
     // rotatedBackButton: {
     //     transform: [{ rotate: '60deg' }],
     // },
