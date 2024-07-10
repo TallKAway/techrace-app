@@ -10,32 +10,25 @@ import {
     NativeScrollEvent,
 } from 'react-native';
 
-import { useGetRaces } from '@/api/ressources/races/races';
+import { useGetRacesByDate } from '@/api/ressources/races/races';
 import Badge from '@/components/design-system/Badge/Badge';
 import LineChartElement from '@/components/design-system/LineChart/LineChartElement';
 import StatisticsSummaryCard from '@/components/design-system/StatisticsSummaryCard/StatisticsSummaryCard';
+import { useSocket } from '@/shared/providers/SocketContext';
 import Colors from '@/styles/constants/Colors';
 
 export default function StatisticsSummaryScreen() {
     const navigation = useNavigation();
+    const { socket } = useSocket();
+    const { data } = useGetRacesByDate();
 
     const [showHeader, setShowHeader] = useState(false);
+
     const scrollY = new Animated.Value(0);
 
-    // Fetch data from the API, this is an example of how to use the useGetRaces hook
-    const { data } = useGetRaces();
-    console.log(data);
+    const socketConnection = socket?.readyState === 1 ? 'Connecté' : 'Déconnecté';
 
-    // Récuperer les données depuis l'API, c'est un exemple de ce que peut renvoyer le hook useGetRaces. Remplacer lineData par les données récupérées dans data
-    const linedata = {
-        labels: ['22/03', '23/03', '24/03', '25/03', '26/03', '27/03'],
-        datasets: [
-            {
-                data: [2, 3, 0, 8, 9, 3],
-                strokeWidth: 1,
-            },
-        ],
-    };
+    const racesByDate = data?.data;
 
     useEffect(() => {
         navigation.setOptions({
@@ -47,6 +40,27 @@ export default function StatisticsSummaryScreen() {
             title: 'Statistiques',
         });
     }, [showHeader, navigation]);
+
+    if (!racesByDate) {
+        return null;
+    }
+
+    const lineGrahData = {
+        labels: racesByDate
+            ?.map(({ date }) =>
+                new Date(date).toLocaleDateString('fr-FR', {
+                    day: 'numeric',
+                    month: 'numeric',
+                })
+            )
+            .slice(0, 6),
+        datasets: [
+            {
+                data: racesByDate?.map(({ races }) => races.length).slice(0, 6),
+                strokeWidth: 1,
+            },
+        ],
+    };
 
     const animatedTitleOpacity = scrollY.interpolate({
         inputRange: [0, 50],
@@ -71,7 +85,7 @@ export default function StatisticsSummaryScreen() {
                 scrollEventThrottle={16}
             >
                 <View style={styles.statusContainer}>
-                    <Badge status="Connecté" />
+                    <Badge status={socketConnection} />
                 </View>
                 <View>
                     <Animated.Text
@@ -86,16 +100,35 @@ export default function StatisticsSummaryScreen() {
                     </Animated.Text>
                 </View>
                 <View>
-                    <LineChartElement title="Nombre de courses effectuées" data={linedata} />
+                    <LineChartElement title="Nombre de courses effectuées" data={lineGrahData} />
                 </View>
-                {/* TODO: map les infos selon la date quand on aura les données */}
-                <View>
-                    <Text style={styles.date}>Aujourd'hui</Text>
-                    <StatisticsSummaryCard />
-                    <StatisticsSummaryCard />
-                    <StatisticsSummaryCard />
-                    <StatisticsSummaryCard />
-                </View>
+
+                {racesByDate.map(({ date, races }) => {
+                    let formattedDate = new Date(date).toLocaleDateString('fr-FR', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                    });
+
+                    const today = new Date().toLocaleDateString('fr-FR', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                    });
+
+                    if (formattedDate === today) {
+                        formattedDate = "Aujourd'hui";
+                    }
+
+                    return (
+                        <View key={date}>
+                            <Text style={styles.date}>{formattedDate}</Text>
+                            {races.map((race) => (
+                                <StatisticsSummaryCard key={race.id} race={race} />
+                            ))}
+                        </View>
+                    );
+                })}
             </Animated.ScrollView>
         </SafeAreaView>
     );
@@ -111,6 +144,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         paddingBottom: 8,
+        textTransform: 'capitalize',
     },
     graphTitle: {
         color: Colors.text,

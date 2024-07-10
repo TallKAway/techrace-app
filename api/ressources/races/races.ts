@@ -1,25 +1,27 @@
 import { useQuery } from '@tanstack/react-query';
 
-export const useGetRaces = () =>
-    useQuery({
+import { techRaceApiCall } from '../utils/api';
+
+import { RacesByDateResponse } from './types';
+
+export const useGetRaces = () => {
+    return useQuery({
         queryKey: ['races'],
         queryFn: () =>
-            fetch('/api/races', {
+            techRaceApiCall('/race/all', {
                 body: null,
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }).then((response) => {
-                if (!response.ok) {
-                    throw {
-                        response: response,
-                        error: new Error(
-                            `Error: ${response.url} ${response.status} ${response.statusText}`
-                        ),
-                    };
-                }
-
-                return response.json();
             }),
     });
+};
+
+export const useGetRacesByDate = () => {
+    return useQuery<RacesByDateResponse>({
+        queryKey: ['racesByDate'],
+        queryFn: () =>
+            techRaceApiCall('/race/all/sortedByDate', {
+                body: null,
+                method: 'GET',
+            }),
+    });
+};
