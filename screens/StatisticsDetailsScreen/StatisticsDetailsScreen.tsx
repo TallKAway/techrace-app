@@ -2,8 +2,8 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 
 import LineChartElement from '../../components/design-system/LineChart/LineChartElement';
-import StatisticsElement from '../../components/design-system/StatisticsElement/StatisticsElement';
 
+import StatisticsElement from '../../components/design-system/StatisticsElement/StatisticsElement';
 import Color from '../../styles/constants/Colors';
 
 export default function CarRaceStatisticDetails() {
@@ -25,6 +25,7 @@ export default function CarRaceStatisticDetails() {
                 <View style={styles.header}>
                     <Text style={styles.title}>Mardi 19 Mai 2024</Text>
                 </View>
+
                 <View>
                     <StatisticsElement />
                 </View>
