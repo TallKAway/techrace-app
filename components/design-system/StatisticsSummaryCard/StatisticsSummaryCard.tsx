@@ -5,13 +5,22 @@ import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import { ChevronIcon } from '../icons/ChevronIcon';
 import { StatisticsIcon } from '../icons/StatisticsIcon';
 
+import { Race } from '@/api/ressources/races/types';
 import { ScreenStackNavigatorProps } from '@/app/domains/navigation';
 import Colors from '@/styles/constants/Colors';
 
-interface StatisticsSummaryCardProps {}
+interface StatisticsSummaryCardProps {
+    race: Race;
+}
 
-export default function StatisticsSummaryCard({}: StatisticsSummaryCardProps) {
+export default function StatisticsSummaryCard({ race }: StatisticsSummaryCardProps) {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
+
+    const startDate = new Date(race.start_Time).getTime();
+    const endDate = new Date(race.end_Time).getTime();
+    const raceTime = endDate - startDate;
+
+    const raceTimeMinutes = raceTime / (1000 * 60);
 
     return (
         <TouchableHighlight
@@ -25,10 +34,10 @@ export default function StatisticsSummaryCard({}: StatisticsSummaryCardProps) {
                         <StatisticsIcon />
                     </View>
                     <View>
-                        <Text style={styles.date}>19/05/2024 - 10h26</Text>
+                        <Text style={styles.date}>{race.timestamp}</Text>
                         <View style={styles.textContainer}>
-                            <Text style={styles.text}>Temps de course : 8min</Text>
-                            <Text style={styles.text}>Distance parcourue : 320m</Text>
+                            <Text style={styles.text}>Temps de course : {raceTimeMinutes} min</Text>
+                            <Text style={styles.text}>Distance parcourue : {race.distance} cm</Text>
                         </View>
                     </View>
                 </View>

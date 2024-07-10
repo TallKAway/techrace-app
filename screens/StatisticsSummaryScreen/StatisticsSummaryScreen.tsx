@@ -10,7 +10,7 @@ import {
     NativeScrollEvent,
 } from 'react-native';
 
-import { useGetRaces } from '@/api/ressources/races/races';
+import { useGetRacesByDate } from '@/api/ressources/races/races';
 import Badge from '@/components/design-system/Badge/Badge';
 import LineChartElement from '@/components/design-system/LineChart/LineChartElement';
 import StatisticsSummaryCard from '@/components/design-system/StatisticsSummaryCard/StatisticsSummaryCard';
@@ -20,8 +20,7 @@ import Colors from '@/styles/constants/Colors';
 export default function StatisticsSummaryScreen() {
     const navigation = useNavigation();
     const { socket } = useSocket();
-    const { data } = useGetRaces();
-    console.log('data', data);
+    const { data } = useGetRacesByDate();
 
     const [showHeader, setShowHeader] = useState(false);
 
@@ -29,7 +28,8 @@ export default function StatisticsSummaryScreen() {
 
     const socketConnection = socket?.readyState === 1 ? 'Connecté' : 'Déconnecté';
 
-    // Récuperer les données depuis l'API, c'est un exemple de ce que peut renvoyer le hook useGetRaces. Remplacer lineData par les données récupérées dans data
+    const racesByDate = data?.data;
+
     const linedata = {
         labels: ['22/03', '23/03', '24/03', '25/03', '26/03', '27/03'],
         datasets: [
@@ -91,14 +91,15 @@ export default function StatisticsSummaryScreen() {
                 <View>
                     <LineChartElement title="Nombre de courses effectuées" data={linedata} />
                 </View>
-                {/* TODO: map les infos selon la date quand on aura les données */}
-                <View>
-                    <Text style={styles.date}>Aujourd'hui</Text>
-                    <StatisticsSummaryCard />
-                    <StatisticsSummaryCard />
-                    <StatisticsSummaryCard />
-                    <StatisticsSummaryCard />
-                </View>
+
+                {racesByDate?.map(({ date, races }) => (
+                    <View key={date}>
+                        <Text style={styles.date}>{date}</Text>
+                        {races.map((race) => (
+                            <StatisticsSummaryCard key={race.id} race={race} />
+                        ))}
+                    </View>
+                ))}
             </Animated.ScrollView>
         </SafeAreaView>
     );
