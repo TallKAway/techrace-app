@@ -21,6 +21,7 @@ export default function StatisticsSummaryCard({ race }: StatisticsSummaryCardPro
     const raceTime = endDate - startDate;
 
     const raceTimeMinutes = raceTime / (1000 * 60);
+    const raceDistanceMeter = race.distance / 100;
 
     return (
         <TouchableHighlight
@@ -37,7 +38,9 @@ export default function StatisticsSummaryCard({ race }: StatisticsSummaryCardPro
                         <Text style={styles.date}>{race.timestamp}</Text>
                         <View style={styles.textContainer}>
                             <Text style={styles.text}>Temps de course : {raceTimeMinutes} min</Text>
-                            <Text style={styles.text}>Distance parcourue : {race.distance} cm</Text>
+                            <Text style={styles.text}>
+                                Distance parcourue : {raceDistanceMeter} m
+                            </Text>
                         </View>
                     </View>
                 </View>

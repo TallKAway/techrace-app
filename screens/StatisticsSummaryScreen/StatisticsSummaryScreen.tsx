@@ -92,14 +92,32 @@ export default function StatisticsSummaryScreen() {
                     <LineChartElement title="Nombre de courses effectuées" data={linedata} />
                 </View>
 
-                {racesByDate?.map(({ date, races }) => (
-                    <View key={date}>
-                        <Text style={styles.date}>{date}</Text>
-                        {races.map((race) => (
-                            <StatisticsSummaryCard key={race.id} race={race} />
-                        ))}
-                    </View>
-                ))}
+                {racesByDate?.map(({ date, races }) => {
+                    let formattedDate = new Date(date).toLocaleDateString('fr-FR', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                    });
+
+                    const today = new Date().toLocaleDateString('fr-FR', {
+                        weekday: 'long',
+                        day: 'numeric',
+                        month: 'long',
+                    });
+
+                    if (formattedDate === today) {
+                        formattedDate = "Aujourd'hui";
+                    }
+
+                    return (
+                        <View key={date}>
+                            <Text style={styles.date}>{formattedDate}</Text>
+                            {races.map((race) => (
+                                <StatisticsSummaryCard key={race.id} race={race} />
+                            ))}
+                        </View>
+                    );
+                })}
             </Animated.ScrollView>
         </SafeAreaView>
     );
@@ -115,6 +133,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 'bold',
         paddingBottom: 8,
+        textTransform: 'capitalize',
     },
     graphTitle: {
         color: Colors.text,
