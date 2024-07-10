@@ -12,6 +12,12 @@ type RouteParams = {
     };
 };
 
+type RouteParams = {
+    params: {
+        id: number;
+    };
+};
+
 export default function StatisticsElement() {
     const route = useRoute<RouteProp<RouteParams, 'params'>>();
     const { id } = route.params;
