@@ -1,10 +1,174 @@
+import 'react-native-gesture-handler';
+import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-import ControlButton from '@/components/design-system/ControlButton';
+import {
+    GestureHandlerRootView,
+    GestureHandlerStateChangeEvent,
+    State,
+    TapGestureHandler,
+} from 'react-native-gesture-handler';
+
 import BatteryIcon from '@/components/design-system/icons/Battery';
+import { useSocket } from '@/shared/providers/SocketContext';
 import Colors from '@/styles/constants/Colors';
 
+const durationMs = 99999;
+const maxWheelValue = 4069;
+
 export default function CarRaceScreen() {
+    const { socket } = useSocket();
+
+    const [forwardButtonPressed, setForwardButtonPressed] = useState(false);
+    const [backwardButtonPressed, setBackwardButtonPressed] = useState(false);
+
+    const [leftButtonPressed, setLeftButtonPressed] = useState(false);
+    const [rightButtonPressed, setRightButtonPressed] = useState(false);
+
+    const handleForwardButtonEvent = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setForwardButtonPressed(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setForwardButtonPressed(false);
+        }
+    };
+
+    const handleBackwardButtonEvent = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setBackwardButtonPressed(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setBackwardButtonPressed(false);
+        }
+    };
+
+    const handleLeftButtonEvent = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setLeftButtonPressed(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setLeftButtonPressed(false);
+        }
+    };
+
+    const handleRightButtonEvent = (event: GestureHandlerStateChangeEvent) => {
+        if (event.nativeEvent.state === State.BEGAN) {
+            setRightButtonPressed(true);
+        } else if (
+            event.nativeEvent.state === State.END ||
+            event.nativeEvent.state === State.FAILED ||
+            event.nativeEvent.state === State.CANCELLED
+        ) {
+            setRightButtonPressed(false);
+        }
+    };
+
+    useEffect(() => {
+        carMoveControl();
+    }, [forwardButtonPressed, backwardButtonPressed, rightButtonPressed, leftButtonPressed]);
+
+    const carMoveControl = () => {
+        let frontLeftWheelValue = 0;
+        let backLeftWheelValue = 0;
+        let frontRightWheelValue = 0;
+        let backRightWheelValue = 0;
+
+        if (
+            forwardButtonPressed ||
+            backwardButtonPressed ||
+            rightButtonPressed ||
+            leftButtonPressed
+        ) {
+            // Move forward and turn Right
+            if (forwardButtonPressed && rightButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = maxWheelValue;
+                backLeftWheelValue = maxWheelValue;
+                backRightWheelValue = 0;
+            }
+
+            // Move forward and turn Left
+            if (forwardButtonPressed && leftButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = maxWheelValue;
+                backRightWheelValue = maxWheelValue;
+                backLeftWheelValue = 0;
+            }
+
+            // Move backward and turn Right
+            if (forwardButtonPressed && rightButtonPressed) {
+                frontLeftWheelValue = -maxWheelValue;
+                frontRightWheelValue = -maxWheelValue;
+                backLeftWheelValue = -maxWheelValue;
+                backRightWheelValue = 0;
+            }
+
+            // Move backward and turn Left
+            if (forwardButtonPressed && rightButtonPressed) {
+                frontLeftWheelValue = -maxWheelValue;
+                frontRightWheelValue = -maxWheelValue;
+                backRightWheelValue = -maxWheelValue;
+                backLeftWheelValue = 0;
+            }
+
+            // Move forward
+            if (forwardButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = maxWheelValue;
+                backRightWheelValue = maxWheelValue;
+                backLeftWheelValue = maxWheelValue;
+            }
+
+            // Move backward
+            if (backwardButtonPressed) {
+                frontLeftWheelValue = -maxWheelValue;
+                frontRightWheelValue = -maxWheelValue;
+                backRightWheelValue = -maxWheelValue;
+                backLeftWheelValue = -maxWheelValue;
+            }
+            // Turn Left
+            if (leftButtonPressed) {
+                frontLeftWheelValue = 0;
+                frontRightWheelValue = maxWheelValue;
+                backRightWheelValue = maxWheelValue;
+                backLeftWheelValue = 0;
+            }
+            // Turn Right
+            if (rightButtonPressed) {
+                frontLeftWheelValue = maxWheelValue;
+                frontRightWheelValue = 0;
+                backRightWheelValue = 0;
+                backLeftWheelValue = maxWheelValue;
+            }
+        } else {
+            frontLeftWheelValue = 0;
+            backLeftWheelValue = 0;
+            frontRightWheelValue = 0;
+            backRightWheelValue = 0;
+        }
+
+        const speedData = {
+            cmd: '1',
+            data: [
+                frontLeftWheelValue,
+                backLeftWheelValue,
+                frontRightWheelValue,
+                backRightWheelValue,
+            ],
+        };
+        socket?.send(JSON.stringify(speedData));
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.controlScreen}>
@@ -17,31 +181,106 @@ export default function CarRaceScreen() {
                 </View>
                 <View style={styles.chrono}>
                     <Text style={styles.chronoText}>0</Text>
-                    <Text style={styles.chronoText}>Kmh</Text>
+                    <Text style={styles.chronoText}>Km/h</Text>
                 </View>
             </View>
-            <View style={styles.controlButtonsWrapper}>
+            <GestureHandlerRootView style={styles.controlButtonsWrapper}>
                 <View>
-                    <ControlButton direction="up" style={styles.controlButton} />
-                    <ControlButton
-                        direction="down"
-                        style={[styles.controlButton, styles.rotatedBackButton]}
-                    />
+                    <TapGestureHandler
+                        onHandlerStateChange={handleForwardButtonEvent}
+                        maxDurationMs={durationMs}
+                    >
+                        <View style={[styles.button, forwardButtonPressed && styles.buttonPressed]}>
+                            <View
+                                style={[
+                                    styles.triangle,
+                                    forwardButtonPressed && styles.buttonPressedTriangle,
+                                ]}
+                            ></View>
+                        </View>
+                    </TapGestureHandler>
+                    <TapGestureHandler
+                        onHandlerStateChange={handleBackwardButtonEvent}
+                        maxDurationMs={durationMs}
+                    >
+                        <View
+                            style={[
+                                styles.button,
+                                backwardButtonPressed && styles.buttonPressed,
+                                styles.rotatedBackButton,
+                            ]}
+                        >
+                            <View
+                                style={[
+                                    styles.triangle,
+                                    backwardButtonPressed && styles.buttonPressedTriangle,
+                                ]}
+                            ></View>
+                        </View>
+                    </TapGestureHandler>
                 </View>
-                <ControlButton
-                    direction="left"
-                    style={[styles.controlButton, styles.rotatedLeftButton]}
-                />
-                <ControlButton
-                    direction="right"
-                    style={[styles.controlButton, styles.rotatedRightButton]}
-                />
-            </View>
+                <View style={styles.horizontalControl}>
+                    <TapGestureHandler
+                        onHandlerStateChange={handleLeftButtonEvent}
+                        maxDurationMs={durationMs}
+                    >
+                        <View
+                            style={[
+                                styles.button,
+                                leftButtonPressed && styles.buttonPressed,
+                                styles.rotatedLeftButton,
+                            ]}
+                        >
+                            <View
+                                style={[
+                                    styles.triangle,
+                                    leftButtonPressed && styles.buttonPressedTriangle,
+                                ]}
+                            ></View>
+                        </View>
+                    </TapGestureHandler>
+                    <TapGestureHandler
+                        onHandlerStateChange={handleRightButtonEvent}
+                        maxDurationMs={durationMs}
+                    >
+                        <View
+                            style={[
+                                styles.button,
+                                rightButtonPressed && styles.buttonPressed,
+                                styles.rotatedRightButton,
+                            ]}
+                        >
+                            <View
+                                style={[
+                                    styles.triangle,
+                                    rightButtonPressed && styles.buttonPressedTriangle,
+                                ]}
+                            ></View>
+                        </View>
+                    </TapGestureHandler>
+                </View>
+            </GestureHandlerRootView>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    button: {
+        alignItems: 'center',
+        borderColor: Colors.primary,
+        borderRadius: 100,
+        borderWidth: 2,
+        height: 86,
+        justifyContent: 'center',
+        margin: 10,
+        width: 86,
+    },
+    buttonPressed: {
+        backgroundColor: Colors.primary,
+    },
+    buttonPressedTriangle: {
+        borderBottomColor: Colors.white,
+    },
     chrono: {
         alignItems: 'center',
         backgroundColor: Colors.white,
@@ -65,9 +304,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 16,
         width: '100%',
-    },
-    controlButton: {
-        margin: 10,
     },
     controlButtonsWrapper: {
         alignItems: 'center',
@@ -112,6 +348,10 @@ const styles = StyleSheet.create({
         marginBottom: 2,
         marginHorizontal: 3,
     },
+
+    horizontalControl: {
+        flexDirection: 'row',
+    },
     rotatedBackButton: {
         transform: [{ rotate: '60deg' }],
     },
@@ -120,5 +360,14 @@ const styles = StyleSheet.create({
     },
     rotatedRightButton: {
         transform: [{ rotate: '90deg' }],
+    },
+    triangle: {
+        borderBottomColor: Colors.primary,
+        borderBottomWidth: 30,
+        borderLeftColor: Colors.transparent,
+        borderLeftWidth: 17,
+        borderRightColor: Colors.transparent,
+        borderRightWidth: 17,
+        marginBottom: 7,
     },
 });
