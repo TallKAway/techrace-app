@@ -44,7 +44,20 @@ export default function TabLayout() {
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'car' : 'car-outline'} color={color} />
                     ),
-                    tabBarButton: (props) => <TouchableOpacity {...props} disabled={!socket} />,
+                    tabBarButton: (props) => (
+                        <TouchableOpacity
+                            {...props}
+                            disabled={!socket}
+                            style={[
+                                props.style,
+                                {
+                                    opacity: !socket ? 0.5 : 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                },
+                            ]}
+                        />
+                    ),
                 }}
             />
         </Tab.Navigator>

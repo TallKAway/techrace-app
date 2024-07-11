@@ -29,7 +29,7 @@ export default function StatisticsDetailsScreen() {
     const capitalizeFirstLetter = (str: string) => {
         return str.charAt(0).toUpperCase() + str.slice(1);
     };
-    
+
     // TODO : Récuperer les données depuis l'API data from te API, c'est un exemple de ce que peut renvoyer le hook useGetStatisticsDetails. Remplacer lineData par les données récupérées dans data
     const linedata = {
         labels: ['00:00', '05:00', '10:00', '15:00', '20:00', '25:00'],
