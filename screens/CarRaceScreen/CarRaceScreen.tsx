@@ -314,8 +314,7 @@ const styles = StyleSheet.create({
     controlButtonsWrapper: {
         alignItems: 'center',
         flexDirection: 'row',
-        height: 248,
-        justifyContent: 'space-around',
+        justifyContent: 'center',
         width: '100%',
     },
     controlScreen: {

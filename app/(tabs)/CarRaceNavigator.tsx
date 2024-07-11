@@ -9,7 +9,7 @@ export default function CarRaceNavigator() {
     return (
         <CarRaceStack.Navigator>
             <CarRaceStack.Screen
-                name="Course"
+                name="CarRace"
                 component={CarRaceScreen}
                 options={{
                     headerStyle: {
