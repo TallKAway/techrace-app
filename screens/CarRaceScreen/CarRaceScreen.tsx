@@ -166,7 +166,11 @@ export default function CarRaceScreen() {
                 backRightWheelValue,
             ],
         };
-        socket?.send(JSON.stringify(speedData));
+        try {
+            socket?.send(JSON.stringify(speedData));
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     return (

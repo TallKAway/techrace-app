@@ -12,27 +12,31 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
 
     useEffect(() => {
-        const newSocket = new WebSocket(SOCKET_URL);
+        if (SOCKET_URL !== '') {
+            const newSocket = new WebSocket(SOCKET_URL);
 
-        newSocket.onopen = () => {
-            console.log('WebSocket connection established');
-        };
+            console.log();
 
-        newSocket.onclose = () => {
-            console.log('WebSocket connection closed');
-        };
-
-        newSocket.onerror = (error) => {
-            console.error('WebSocket error', error);
-            console.log('Car stop');
-            const speedData = {
-                cmd: '1',
-                data: [0, 0, 0, 0],
+            newSocket.onopen = () => {
+                console.log('WebSocket connection established');
             };
-            socket?.send(JSON.stringify(speedData));
-        };
 
-        setSocket(newSocket);
+            newSocket.onclose = () => {
+                console.log('WebSocket connection closed');
+            };
+
+            newSocket.onerror = (error) => {
+                console.error('WebSocket error', error);
+                console.log('Car stop');
+                const speedData = {
+                    cmd: '1',
+                    data: [0, 0, 0, 0],
+                };
+                socket?.send(JSON.stringify(speedData));
+            };
+
+            setSocket(newSocket);
+        }
     }, []);
 
     return <WebSocketContext.Provider value={{ socket }}>{children}</WebSocketContext.Provider>;
