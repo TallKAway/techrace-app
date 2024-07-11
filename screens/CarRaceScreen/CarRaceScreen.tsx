@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import 'react-native-gesture-handler';
 import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
@@ -9,11 +8,6 @@ import {
     State,
     TapGestureHandler,
 } from 'react-native-gesture-handler';
-
-// import { GestureHandlerRootView } from 'react-native-gesture-handler';
-// import { TouchableHighlight } from 'react-native-gesture-handler';
-
-// import ControlButton from '@/components/design-system/ControlButton';
 
 import BatteryIcon from '@/components/design-system/icons/Battery';
 import { useSocket } from '@/shared/providers/SocketContext';
@@ -228,7 +222,7 @@ export default function CarRaceScreen() {
                 <View style={styles.horizontalControl}>
                     <TapGestureHandler
                         onHandlerStateChange={handleLeftButtonEvent}
-                        maxDurationMs={99999}
+                        maxDurationMs={durationMs}
                     >
                         <View
                             style={[
@@ -247,7 +241,7 @@ export default function CarRaceScreen() {
                     </TapGestureHandler>
                     <TapGestureHandler
                         onHandlerStateChange={handleRightButtonEvent}
-                        maxDurationMs={99999}
+                        maxDurationMs={durationMs}
                     >
                         <View
                             style={[
