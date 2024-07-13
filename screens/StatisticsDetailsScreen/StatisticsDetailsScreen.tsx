@@ -26,11 +26,16 @@ export default function StatisticsDetailsScreen() {
     const { date, id } = route.params;
     const { data } = useGetStatisticsDetailsElements(id);
 
-    const selectedDay = new Date(date).toLocaleDateString('fr-FR', {
+    const selectedDayFormatted = new Date(date).toLocaleDateString('fr-FR', {
         weekday: 'long',
         day: 'numeric',
         month: 'long',
         year: 'numeric',
+    });
+
+    const raceStartTimeFormatted = new Date(date).toLocaleTimeString('fr-FR', {
+        hour: 'numeric',
+        minute: 'numeric',
     });
 
     const averageSpeedData = data?.data.speeds[0].speeds;
@@ -57,7 +62,10 @@ export default function StatisticsDetailsScreen() {
         <SafeAreaView style={styles.container}>
             <View>
                 <View style={styles.header}>
-                    <Text style={styles.title}>{capitalizeFirstLetter(selectedDay)}</Text>
+                    <Text style={styles.title}>{capitalizeFirstLetter(selectedDayFormatted)}</Text>
+                </View>
+                <View>
+                    <Text style={styles.startTimeRace}>Commencé à {raceStartTimeFormatted}</Text>
                 </View>
 
                 <View>
@@ -79,6 +87,10 @@ const styles = StyleSheet.create({
     },
     header: {
         marginTop: 32,
+    },
+    startTimeRace: {
+        color: Color.greyText,
+        marginTop: 8,
     },
     title: {
         color: Color.text,
