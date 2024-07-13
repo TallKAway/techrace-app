@@ -13,7 +13,6 @@ import Colors from '@/styles/constants/Colors';
 export default function TabLayout() {
     const Tab = createBottomTabNavigator();
     const { socket } = useSocket();
-    console.log('🚀 ~ TabLayout ~ socket:', socket);
 
     return (
         <Tab.Navigator

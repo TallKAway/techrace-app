@@ -29,7 +29,6 @@ export default function StatisticsSummaryScreen() {
     const socketConnection = socket?.readyState === 1 ? 'Connecté' : 'Déconnecté';
 
     const racesByDate = data?.data;
-    console.log("🚀 ~ StatisticsSummaryScreen ~ racesByDate:", racesByDate)
 
     useEffect(() => {
         navigation.setOptions({
