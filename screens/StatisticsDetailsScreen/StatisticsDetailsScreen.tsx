@@ -8,6 +8,8 @@ import LineChartElement from '../../components/design-system/LineChart/LineChart
 import StatisticsElement from '../../components/design-system/StatisticsElement/StatisticsElement';
 import Color from '../../styles/constants/Colors';
 
+import { useGetStatisticsDetailsElements } from '@/api/ressources/statistics-details/statisticsDetailsElement';
+
 type RouteParams = {
     params: {
         id: number;
@@ -15,9 +17,14 @@ type RouteParams = {
     };
 };
 
+const capitalizeFirstLetter = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
 export default function StatisticsDetailsScreen() {
     const route = useRoute<RouteProp<RouteParams, 'params'>>();
-    const { date } = route.params;
+    const { date, id } = route.params;
+    const { data } = useGetStatisticsDetailsElements(id);
 
     const selectedDay = new Date(date).toLocaleDateString('fr-FR', {
         weekday: 'long',
@@ -26,16 +33,21 @@ export default function StatisticsDetailsScreen() {
         year: 'numeric',
     });
 
-    const capitalizeFirstLetter = (str: string) => {
-        return str.charAt(0).toUpperCase() + str.slice(1);
-    };
+    const averageSpeedData = data?.data.speeds[0].speeds;
 
-    // TODO : Récuperer les données depuis l'API data from te API, c'est un exemple de ce que peut renvoyer le hook useGetStatisticsDetails. Remplacer lineData par les données récupérées dans data
+    if (!averageSpeedData) {
+        return null;
+    }
+
     const linedata = {
-        labels: ['00:00', '05:00', '10:00', '15:00', '20:00', '25:00'],
+        labels: averageSpeedData?.map(({ date }) =>
+            new Date(date).toLocaleDateString('fr-FR', {
+                second: 'numeric',
+            })
+        ),
         datasets: [
             {
-                data: [20, 45, 28, 80, 99, 43],
+                data: averageSpeedData?.map(({ speed }) => speed),
                 strokeWidth: 1,
             },
         ],
