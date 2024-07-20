@@ -1,6 +1,6 @@
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
 
 import Color from '../../../styles/constants/Colors';
 
@@ -31,23 +31,34 @@ export default function StatisticsElement() {
 
     const maxSpeed = raceStatById.speeds[0].max_Speed;
 
+    const batteryConsumption = raceStatById?.battery[0]?.battery_consumed;
+
     return (
-        <View style={styles.container}>
-            <View style={styles.titleStatsElement}>
-                <Text style={styles.titleElement}>Temps(min)</Text>
-                <Text style={styles.valueStatsElement}>{raceTimeMinutes}</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={styles.container}>
+                <View style={styles.titleStatsElement}>
+                    <Text style={styles.titleElement}>Temps(min)</Text>
+                    <Text style={styles.valueStatsElement}>{raceTimeMinutes}</Text>
+                </View>
+                <View style={styles.separator}></View>
+                <View style={styles.titleStatsElement}>
+                    <Text style={styles.titleElement}>Distance(m)</Text>
+                    <Text style={styles.valueStatsElement}>{distanceMeter}</Text>
+                </View>
+                <View style={styles.separator}></View>
+                <View style={styles.titleStatsElement}>
+                    <Text style={styles.titleElement}>Vitesse Max</Text>
+                    <Text style={styles.valueStatsElement}>{maxSpeed}</Text>
+                </View>
+                <View style={styles.separator}></View>
+                <View style={styles.titleStatsElement}>
+                    <Text style={styles.titleElement}>Batterie Cons. (%)</Text>
+                    <Text style={styles.valueStatsElement}>
+                        {batteryConsumption ? batteryConsumption : '-'}
+                    </Text>
+                </View>
             </View>
-            <View style={styles.separator}></View>
-            <View style={styles.titleStatsElement}>
-                <Text style={styles.titleElement}>Distance(m)</Text>
-                <Text style={styles.valueStatsElement}>{distanceMeter}</Text>
-            </View>
-            <View style={styles.separator}></View>
-            <View style={styles.titleStatsElement}>
-                <Text style={styles.titleElement}>Vitesse Max</Text>
-                <Text style={styles.valueStatsElement}>{maxSpeed}</Text>
-            </View>
-        </View>
+        </ScrollView>
     );
 }
 const styles = StyleSheet.create({
