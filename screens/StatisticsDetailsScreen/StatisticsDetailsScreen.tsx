@@ -55,7 +55,6 @@ export default function StatisticsDetailsScreen() {
 
     const averageSpeedData = data?.data.speeds[0]?.speeds || [];
     const batteryActivityData = data?.data.battery[0]?.battery_level || [];
-    console.log('🚀 ~ StatisticsDetailsScreen ~ batteryActivityData:', batteryActivityData);
 
     const [showHeader, setShowHeader] = useState(false);
 
