@@ -55,6 +55,7 @@ export default function StatisticsDetailsScreen() {
 
     const averageSpeedData = data?.data.speeds[0]?.speeds || [];
     const batteryActivityData = data?.data.battery[0]?.battery_level || [];
+    console.log('🚀 ~ StatisticsDetailsScreen ~ batteryActivityData:', batteryActivityData);
 
     const [showHeader, setShowHeader] = useState(false);
 
@@ -80,7 +81,6 @@ export default function StatisticsDetailsScreen() {
     const lineAverageSpeedData = {
         labels: averageSpeedData?.map(({ date }) =>
             new Date(date).toLocaleTimeString('fr-FR', {
-                hour: 'numeric',
                 minute: 'numeric',
                 second: 'numeric',
             })
@@ -96,9 +96,7 @@ export default function StatisticsDetailsScreen() {
     const lineBatteryActictyData = {
         labels: batteryActivityData?.map(({ date }) =>
             new Date(date).toLocaleTimeString('fr-FR', {
-                hour: 'numeric',
                 minute: 'numeric',
-                second: 'numeric',
             })
         ),
         datasets: [
@@ -169,7 +167,7 @@ export default function StatisticsDetailsScreen() {
                     <View>
                         {batteryActivityData.length > 0 ? (
                             <LineChartElement
-                                title="Activité Batterie"
+                                title="Activité Batterie (mAm)"
                                 data={lineBatteryActictyData}
                             />
                         ) : (

@@ -20,6 +20,10 @@ interface BatteryActivity {
     id: number;
     battery_level: BatteryLevel[];
     battery_consumed: number;
+    start_voltage: number;
+    end_voltage: number;
+    timestamp: string;
+    raceId: number;
 }
 
 interface Data {
