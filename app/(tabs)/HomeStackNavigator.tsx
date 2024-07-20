@@ -15,9 +15,9 @@ export default function HomeStackNavigator() {
                 name="StatisticsDetails"
                 component={StatisticsDetailsScreen}
                 options={{
-                    headerShadowVisible: false,
+                    // headerShadowVisible: false,
                     headerBackTitle: 'Retour',
-                    headerTitle: '',
+                    // headerTitle: '',
                 }}
             />
         </HomeStack.Navigator>

@@ -11,6 +11,16 @@ interface SpeedDetail {
     timestamp: string;
     raceId: number;
 }
+interface BatteryLevel {
+    date: string;
+    battery: number;
+}
+
+interface BatteryActivity {
+    id: number;
+    battery_level: BatteryLevel[];
+    battery_consumed: number;
+}
 
 interface Data {
     id: number;
@@ -19,6 +29,7 @@ interface Data {
     end_Time: string;
     distance: number;
     speeds: SpeedDetail[];
+    battery: BatteryActivity[];
 }
 
 export type StatisticsDetailsElementsResponse = {
