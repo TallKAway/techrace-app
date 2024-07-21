@@ -53,10 +53,10 @@ export default function StatisticsSummaryScreen() {
                     month: 'numeric',
                 })
             )
-            .slice(0, 6),
+            .slice(0, 7),
         datasets: [
             {
-                data: racesByDate?.map(({ races }) => races.length).slice(0, 6),
+                data: racesByDate?.map(({ races }) => races.length).slice(0, 7),
                 strokeWidth: 1,
             },
         ],

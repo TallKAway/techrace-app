@@ -32,7 +32,9 @@ export default function StatisticsSummaryCard({ race }: StatisticsSummaryCardPro
     return (
         <TouchableHighlight
             style={styles.button}
-            onPress={() => navigation.navigate('StatisticsDetails')}
+            onPress={() =>
+                navigation.navigate('StatisticsDetails', { id: race.id, date: race.timestamp })
+            }
             underlayColor="white"
         >
             <View style={styles.container}>
