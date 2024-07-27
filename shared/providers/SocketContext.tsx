@@ -54,7 +54,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
             newSocket.onerror = (error) => {
                 console.error('WebSocket error', error);
-                console.log('Car stop');
                 const speedData = {
                     cmd: '1',
                     data: [0, 0, 0, 0],
