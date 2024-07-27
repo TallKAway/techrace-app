@@ -1,13 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render, screen, waitFor } from '@testing-library/react-native';
+import { render, screen } from '@testing-library/react-native';
 import React from 'react';
 
 import StatisticsSummaryScreen from './StatisticsSummaryScreen';
 
 import { useGetRacesByDate } from '@/api/ressources/races/races';
-import { getRacesByDateApiResponse } from '@/api/ressources/races/races.fixture';
+import {
+    getRacesByDateApiResponse,
+    socketConnectedResponse,
+    socketDisconnectedResponse,
+} from '@/api/ressources/races/races.fixture';
 import { useSocket } from '@/shared/providers/SocketContext';
 
 jest.mock('@/api/ressources/races/races', () => ({
@@ -48,22 +52,26 @@ describe('StatisticsSummaryScreen', () => {
             data: getRacesByDateApiResponse,
         });
 
-        (useSocket as jest.Mock).mockReturnValue({
-            socket: {
-                readyState: 0, // Disconnected state
-            },
-        });
+        (useSocket as jest.Mock).mockReturnValue(socketDisconnectedResponse);
 
         render(<WrappedStatisticsSummaryScreen />);
 
-        await waitFor(() => {
-            expect(screen.getByText('Statistiques')).toBeTruthy();
-        });
+        expect(screen.findByText('Statistiques')).toBeTruthy();
 
         expect(screen.getByText('Déconnecté')).toBeTruthy();
     });
 
-    it.todo(
-        'A player opens the app and sees the statistics summary screen. The car is connected to the socket, so it sees the "Connecté" badge.'
-    );
+    it('A player opens the app and sees the statistics summary screen. The car is connected to the socket, so it sees the "Connecté" badge.', async () => {
+        (useGetRacesByDate as jest.Mock).mockReturnValue({
+            data: getRacesByDateApiResponse,
+        });
+
+        (useSocket as jest.Mock).mockReturnValue(socketConnectedResponse);
+
+        render(<WrappedStatisticsSummaryScreen />);
+
+        expect(screen.findByText('Statistiques')).toBeTruthy();
+
+        expect(screen.getByText('Connecté')).toBeTruthy();
+    });
 });
