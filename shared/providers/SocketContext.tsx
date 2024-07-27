@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+/** eslint-disable react-hooks/exhaustive-deps */
+import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 interface WebSocketContextProps {
     socket: WebSocket | null;
@@ -25,8 +26,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
     useEffect(() => {
         if (SOCKET_URL) {
             const newSocket = new WebSocket(SOCKET_URL);
-
-            console.log();
 
             newSocket.onclose = () => {
                 console.log('WebSocket connection closed');
@@ -65,7 +64,8 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
             setSocket(newSocket);
         }
-    }, []);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [socket]);
 
     return (
         <WebSocketContext.Provider value={{ socket, speed, battery, video_url }}>
