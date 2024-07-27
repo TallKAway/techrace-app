@@ -1,12 +1,4 @@
-import { http, HttpResponse } from 'msw';
-
-export const getHttpGetRacesByDateMockHandler = () =>
-    http.get(`/race/all/sortedByDate`, () => {
-        return HttpResponse.json(getRacesByDateApiResponse);
-    });
-
-const getRacesByDateApiResponse = {
-    status: 'success',
+export const getRacesByDateApiResponse = {
     data: [
         {
             date: '2024-07-05',
