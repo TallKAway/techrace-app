@@ -1,6 +1,8 @@
+/** eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
-import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text } from 'react-native';
 
 import {
     GestureHandlerRootView,
@@ -8,6 +10,7 @@ import {
     State,
     TapGestureHandler,
 } from 'react-native-gesture-handler';
+import { WebView } from 'react-native-webview';
 
 import BatteryIcon from '@/components/design-system/icons/Battery';
 import { useSocket } from '@/shared/providers/SocketContext';
@@ -17,7 +20,7 @@ const durationMs = 99999;
 const maxWheelValue = 4069;
 
 export default function CarRaceScreen() {
-    const { socket } = useSocket();
+    const { socket, speed, battery, video_url } = useSocket();
 
     const [forwardButtonPressed, setForwardButtonPressed] = useState(false);
     const [backwardButtonPressed, setBackwardButtonPressed] = useState(false);
@@ -75,8 +78,16 @@ export default function CarRaceScreen() {
 
     useEffect(() => {
         carMoveControl();
-    }, [forwardButtonPressed, backwardButtonPressed, rightButtonPressed, leftButtonPressed]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [
+        forwardButtonPressed,
+        backwardButtonPressed,
+        rightButtonPressed,
+        leftButtonPressed,
+        carMoveControl,
+    ]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const carMoveControl = () => {
         let frontLeftWheelValue = 0;
         let backLeftWheelValue = 0;
@@ -141,7 +152,6 @@ export default function CarRaceScreen() {
                 frontLeftWheelValue = 0;
                 frontRightWheelValue = maxWheelValue;
                 backRightWheelValue = maxWheelValue;
-                backLeftWheelValue = 0;
             }
             // Turn Right
             if (rightButtonPressed) {
@@ -180,14 +190,26 @@ export default function CarRaceScreen() {
                     <Text style={styles.detailsBannerText}>0:03:53s</Text>
                     <View style={styles.detailsBannerBatteryWrapper}>
                         <BatteryIcon />
-                        <Text style={styles.detailsBannerText}>84%</Text>
+                        <Text style={styles.detailsBannerText}>{battery}%</Text>
                     </View>
                 </View>
                 <View style={styles.chrono}>
-                    <Text style={styles.chronoText}>0</Text>
-                    <Text style={styles.chronoText}>Km/h</Text>
+                    <Text style={styles.chronoText}>{speed}</Text>
+                    <Text style={styles.chronoText}>Cm/s</Text>
+                </View>
+                <View>
+                    {video_url ? (
+                        <WebView
+                            style={styles.video}
+                            scalesPageToFit={true}
+                            source={{ uri: video_url }}
+                        />
+                    ) : (
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    )}
                 </View>
             </View>
+
             <GestureHandlerRootView style={styles.controlButtonsWrapper}>
                 <View>
                     <TapGestureHandler
@@ -305,6 +327,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         flex: 1,
+        height: 20,
         justifyContent: 'space-between',
         padding: 16,
         width: '100%',
@@ -323,7 +346,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 28,
         marginTop: 10,
-        minHeight: 352,
+        maxHeight: 282,
         width: '100%',
     },
     detailsBanner: {
@@ -373,5 +396,13 @@ const styles = StyleSheet.create({
         borderRightColor: Colors.transparent,
         borderRightWidth: 17,
         marginBottom: 7,
+    },
+    video: {
+        borderRadius: 12,
+        height: 10,
+        marginTop: 40,
+        maxHeight: 240,
+        overflow: 'hidden',
+        width: 300,
     },
 });
