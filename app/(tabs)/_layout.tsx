@@ -1,14 +1,18 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
+import { TouchableOpacity } from 'react-native';
+
 import CarRaceNavigator from './CarRaceNavigator';
 import HomeStackNavigator from './HomeStackNavigator';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import { useSocket } from '@/shared/providers/SocketContext';
 import Colors from '@/styles/constants/Colors';
 
 export default function TabLayout() {
     const Tab = createBottomTabNavigator();
+    const { socket } = useSocket();
 
     return (
         <Tab.Navigator
@@ -38,6 +42,20 @@ export default function TabLayout() {
                     title: 'Course',
                     tabBarIcon: ({ color, focused }) => (
                         <TabBarIcon name={focused ? 'car' : 'car-outline'} color={color} />
+                    ),
+                    tabBarButton: (props) => (
+                        <TouchableOpacity
+                            {...props}
+                            disabled={!socket}
+                            style={[
+                                props.style,
+                                {
+                                    opacity: !socket ? 0.5 : 1,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                },
+                            ]}
+                        />
                     ),
                 }}
             />

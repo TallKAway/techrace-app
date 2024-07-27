@@ -47,6 +47,7 @@ export default function LineChartElement({ title, data }: LineChartElementProps)
                                 strokeDasharray: '10',
                                 stroke: Color.greyText,
                             },
+
                             color: () => Color.primary,
                             style: {
                                 borderRadius: 16,
