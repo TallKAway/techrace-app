@@ -1,3 +1,14 @@
+export const socketDisconnectedResponse = {
+    socket: {
+        readyState: 0,
+    },
+};
+export const socketConnectedResponse = {
+    socket: {
+        readyState: 1,
+    },
+};
+
 export const getRacesByDateApiResponse = {
     data: [
         {
