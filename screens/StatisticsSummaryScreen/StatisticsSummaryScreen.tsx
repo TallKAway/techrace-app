@@ -10,6 +10,8 @@ import {
     NativeScrollEvent,
 } from 'react-native';
 
+import EmptyStatisticsSummaryScreen from '../EmptyStatisticsScreen/EmptyStatisticsScreen';
+
 import { useGetRacesByDate } from '@/api/ressources/races/races';
 import Badge from '@/components/design-system/Badge/Badge';
 import LineChartElement from '@/components/design-system/LineChart/LineChartElement';
@@ -42,7 +44,7 @@ export default function StatisticsSummaryScreen() {
     }, [showHeader, navigation]);
 
     if (!racesByDate) {
-        return null;
+        return <EmptyStatisticsSummaryScreen />;
     }
 
     const lineGrahData = {

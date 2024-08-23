@@ -5,15 +5,19 @@ import { SafeAreaView, StyleSheet, View, Text, TouchableHighlight } from 'react-
 import { ScreenStackNavigatorProps } from '@/app/domains/navigation';
 import Badge from '@/components/design-system/Badge/Badge';
 import CheckeredFlagIcon from '@/components/design-system/icons/CheckeredFlagIcon';
+import { useSocket } from '@/shared/providers/SocketContext';
 import Colors from '@/styles/constants/Colors';
 
 export default function EmptyStatisticsSummaryScreen() {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
+    const { socket } = useSocket();
+
+    const socketConnection = socket?.readyState === 1 ? 'Connecté' : 'Déconnecté';
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.statusContainer}>
-                <Badge status="Connecté" />
+                <Badge status={socketConnection} />
             </View>
             <View style={styles.raceContainer}>
                 <CheckeredFlagIcon />
