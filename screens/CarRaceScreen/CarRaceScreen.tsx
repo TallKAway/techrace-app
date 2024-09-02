@@ -1,5 +1,3 @@
-/** eslint-disable react-hooks/exhaustive-deps */
-/** eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
@@ -76,18 +74,6 @@ export default function CarRaceScreen() {
         }
     };
 
-    useEffect(() => {
-        carMoveControl();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [
-        forwardButtonPressed,
-        backwardButtonPressed,
-        rightButtonPressed,
-        leftButtonPressed,
-        carMoveControl,
-    ]);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const carMoveControl = () => {
         let frontLeftWheelValue = 0;
         let backLeftWheelValue = 0;
@@ -182,6 +168,16 @@ export default function CarRaceScreen() {
             console.log(e);
         }
     };
+
+    useEffect(() => {
+        carMoveControl();
+    }, [
+        forwardButtonPressed,
+        backwardButtonPressed,
+        rightButtonPressed,
+        leftButtonPressed,
+        carMoveControl,
+    ]);
 
     return (
         <View style={styles.container}>

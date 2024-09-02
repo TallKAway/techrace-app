@@ -63,7 +63,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
 
             setSocket(newSocket);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [socket]);
 
     return (
