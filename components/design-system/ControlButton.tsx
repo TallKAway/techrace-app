@@ -11,7 +11,7 @@ type ControlButtonProps = {
 };
 
 const ControlButton = ({ style, direction }: ControlButtonProps) => {
-    const { socket } = useSocket();
+    const socket = useSocket();
     const [currentSpeed, setCurrentSpeed] = useState(1);
     const [accelerationSpeed, setAccelerationSpeed] = useState(10);
 

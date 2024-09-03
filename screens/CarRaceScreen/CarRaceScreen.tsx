@@ -18,7 +18,7 @@ const durationMs = 99999;
 const maxWheelValue = 4069;
 
 export default function CarRaceScreen() {
-    const { socket, speed, battery, video_url } = useSocket();
+    const socket = useSocket();
 
     const [forwardButtonPressed, setForwardButtonPressed] = useState(false);
     const [backwardButtonPressed, setBackwardButtonPressed] = useState(false);
@@ -186,19 +186,19 @@ export default function CarRaceScreen() {
                     <Text style={styles.detailsBannerText}>0:03:53s</Text>
                     <View style={styles.detailsBannerBatteryWrapper}>
                         <BatteryIcon />
-                        <Text style={styles.detailsBannerText}>{battery}%</Text>
+                        <Text style={styles.detailsBannerText}>{socket.battery}%</Text>
                     </View>
                 </View>
                 <View style={styles.chrono}>
-                    <Text style={styles.chronoText}>{speed}</Text>
+                    <Text style={styles.chronoText}>{socket.speed}</Text>
                     <Text style={styles.chronoText}>Cm/s</Text>
                 </View>
                 <View>
-                    {video_url ? (
+                    {socket.video_url ? (
                         <WebView
                             style={styles.video}
                             scalesPageToFit={true}
-                            source={{ uri: video_url }}
+                            source={{ uri: socket.video_url }}
                         />
                     ) : (
                         <ActivityIndicator size="large" color="#0000ff" />

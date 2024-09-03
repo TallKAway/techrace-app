@@ -1,76 +1,44 @@
-import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import React, { ReactNode, createContext, useContext } from 'react';
 
-interface WebSocketContextProps {
-    socket: WebSocket | null;
-    speed: number | null;
-    battery: number | null;
-    video_url: string | null;
+interface WebSocketContextProps extends WebSocket {
+    speed?: number | null;
+    battery?: number | null;
+    video_url?: string | null;
 }
 const SOCKET_URL = process.env.EXPO_PUBLIC_SOCKET_URL;
 
-const WebSocketContext = createContext<WebSocketContextProps>({
-    socket: null,
-    speed: null,
-    battery: null,
-    video_url: null,
-});
+const socket = new WebSocket(String(SOCKET_URL)) as WebSocketContextProps;
 
-export const SocketProvider = ({ children }: { children: ReactNode }) => {
-    const [socket, setSocket] = useState<WebSocket | null>(null);
-
-    const [speed, setSpeed] = useState<number | null>(null);
-    const [battery, setBattery] = useState<number | null>(null);
-    const [video_url, setVideoUrl] = useState<string | null>(null);
-
-    useEffect(() => {
-        if (SOCKET_URL) {
-            const newSocket = new WebSocket(SOCKET_URL);
-
-            newSocket.onclose = () => {
-                console.log('WebSocket connection closed');
-            };
-
-            newSocket.onmessage = (message) => {
-                console.log('WebSocket message received:', message.data);
-                try {
-                    const data = JSON.parse(message.data);
-
-                    if (data.speed !== undefined && data.battery !== undefined) {
-                        setSpeed(Math.round(data.speed));
-                        setBattery(data.battery);
-                        setVideoUrl(data.videoUrl);
-                    } else {
-                        console.error('Invalid data format:', data);
-                    }
-                } catch (error) {
-                    console.error('Failed to parse message data:', error);
-                }
-            };
-
-            newSocket.onclose = () => {
-                console.log('WebSocket connection closed');
-            };
-
-            newSocket.onerror = (error) => {
-                console.error('WebSocket error', error);
-                const speedData = {
-                    cmd: '1',
-                    data: [0, 0, 0, 0],
-                };
-                socket?.send(JSON.stringify(speedData));
-            };
-
-            setSocket(newSocket);
-        }
-    }, [socket]);
-
-    return (
-        <WebSocketContext.Provider value={{ socket, speed, battery, video_url }}>
-            {children}
-        </WebSocketContext.Provider>
-    );
-};
+const WebSocketContext = createContext<WebSocketContextProps>(socket);
 
 export const useSocket = () => {
-    return useContext(WebSocketContext);
+    const context = useContext(WebSocketContext);
+    if (context === undefined) {
+        throw new Error('useSocket must be used within a SocketProvider');
+    }
+
+    return context;
+};
+
+export const SocketProvider = ({ children }: { children: ReactNode }) => {
+    socket.onopen = () => {
+        console.log('WebSocket connection established');
+    };
+
+    socket.onmessage = ({ data }) => {
+        const { speed, battery, videoUrl } = JSON.parse(data);
+        socket.speed = speed;
+        socket.battery = battery;
+        socket.video_url = videoUrl;
+    };
+
+    socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+
+    socket.onclose = () => {
+        console.log('WebSocket connection closed');
+    };
+
+    return <WebSocketContext.Provider value={socket}>{children}</WebSocketContext.Provider>;
 };

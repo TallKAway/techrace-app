@@ -10,7 +10,7 @@ import Colors from '@/styles/constants/Colors';
 
 export default function EmptyStatisticsSummaryScreen() {
     const navigation = useNavigation<ScreenStackNavigatorProps>();
-    const { socket } = useSocket();
+    const socket = useSocket();
 
     const socketConnection = socket?.readyState === 1 ? 'Connecté' : 'Déconnecté';
 
