@@ -56,7 +56,7 @@ describe('StatisticsSummaryScreen', () => {
 
         render(<WrappedStatisticsSummaryScreen />);
 
-        expect(screen.findByText('Statistiques')).toBeTruthy();
+        expect(await screen.findByText('Statistiques')).toBeTruthy();
 
         expect(screen.getByText('Déconnecté')).toBeTruthy();
     });
@@ -70,7 +70,7 @@ describe('StatisticsSummaryScreen', () => {
 
         render(<WrappedStatisticsSummaryScreen />);
 
-        expect(screen.findByText('Statistiques')).toBeTruthy();
+        expect(await screen.findByText('Statistiques')).toBeTruthy();
 
         expect(screen.getByText('Connecté')).toBeTruthy();
     });
