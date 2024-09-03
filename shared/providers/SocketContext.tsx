@@ -1,4 +1,3 @@
-/** eslint-disable react-hooks/exhaustive-deps */
 import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 interface WebSocketContextProps {
