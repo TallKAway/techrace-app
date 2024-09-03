@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import {
     GestureHandlerRootView,
@@ -180,6 +180,30 @@ export default function CarRaceScreen() {
         leftButtonPressed,
         carMoveControl,
     ]);
+    const cmdStopCar = {
+        cmd: '11',
+    };
+
+    const cmdStartCar = {
+        cmd: '10',
+        data: 1,
+    };
+
+    const startCar = () => {
+        try {
+            socket?.send(JSON.stringify(cmdStartCar));
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const stopCar = () => {
+        try {
+            socket?.send(JSON.stringify(cmdStopCar));
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return (
         <View style={styles.container}>
@@ -208,12 +232,12 @@ export default function CarRaceScreen() {
                 </View>
             </View>
             <View style={styles.startAndStopControl}>
-                <Pressable style={styles.startButton}>
+                <TouchableOpacity style={styles.startButton} onPress={startCar}>
                     <Text style={styles.startTextButton}>Start</Text>
-                </Pressable>
-                <Pressable style={styles.stopButton}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.stopButton} onPress={stopCar}>
                     <Text style={styles.stopTextButton}>Stop</Text>
-                </Pressable>
+                </TouchableOpacity>
             </View>
             <GestureHandlerRootView style={styles.controlButtonsWrapper}>
                 <View>
