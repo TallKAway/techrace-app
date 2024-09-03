@@ -13,19 +13,7 @@
             "backgroundColor": "#ffffff"
         },
         "ios": {
-            "supportsTablet": true,
-            "bundleIdentifier": "com.yourcompany.yourappname",
-            "infoPlist": {
-                "NSAppTransportSecurity": {
-                    "NSAllowsArbitraryLoads": true,
-                    "NSExceptionDomains": {
-                        "192.168.0.82": {
-                            "NSIncludesSubdomains": true,
-                            "NSTemporaryExceptionAllowsInsecureHTTPLoads": true
-                        }
-                    }
-                }
-            }
+            "supportsTablet": true
         },
         "android": {
             "adaptiveIcon": {
