@@ -21,7 +21,7 @@ import Colors from '@/styles/constants/Colors';
 
 export default function StatisticsSummaryScreen() {
     const navigation = useNavigation();
-    const { socket } = useSocket();
+    const socket = useSocket();
     const { data } = useGetRacesByDate();
 
     const [showHeader, setShowHeader] = useState(false);
