@@ -324,7 +324,7 @@ export default function CarRaceScreen() {
 const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
-        backgroundColor: Colors.primaryLight,
+        backgroundColor: Colors.white,
         borderRadius: 100,
         // borderWidth: 1,
         elevation: 12,
@@ -454,7 +454,6 @@ const styles = StyleSheet.create({
     stopButton: {
         alignItems: 'center',
         backgroundColor: Colors.accentLight,
-
         borderRadius: 12,
         color: Colors.white,
         flex: 1,
