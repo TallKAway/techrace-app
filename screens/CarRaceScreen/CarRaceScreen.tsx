@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
+import { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 
 import {
     GestureHandlerRootView,
@@ -205,7 +207,14 @@ export default function CarRaceScreen() {
                     )}
                 </View>
             </View>
-
+            <View style={styles.startAndStopControl}>
+                <Pressable style={styles.startButton}>
+                    <Text style={styles.startTextButton}>Start</Text>
+                </Pressable>
+                <Pressable style={styles.stopButton}>
+                    <Text style={styles.stopTextButton}>Stop</Text>
+                </Pressable>
+            </View>
             <GestureHandlerRootView style={styles.controlButtonsWrapper}>
                 <View>
                     <TapGestureHandler
@@ -289,12 +298,14 @@ export default function CarRaceScreen() {
 const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
-        borderColor: Colors.primary,
+        borderColor: Colors.primaryLight,
         borderRadius: 100,
-        borderWidth: 2,
+        borderWidth: 1,
+        elevation: 12,
         height: 86,
         justifyContent: 'center',
         margin: 10,
+
         width: 86,
     },
     buttonPressed: {
@@ -383,6 +394,39 @@ const styles = StyleSheet.create({
     },
     rotatedRightButton: {
         transform: [{ rotate: '90deg' }],
+    },
+
+    startAndStopControl: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+    },
+    startButton: {
+        alignItems: 'center',
+        backgroundColor: Colors.green,
+        borderRadius: 12,
+        color: Colors.white,
+        height: 50,
+        justifyContent: 'center',
+        width: 100,
+    },
+    startTextButton: {
+        color: Colors.white,
+        fontWeight: 'bold',
+    },
+    stopButton: {
+        alignItems: 'center',
+        backgroundColor: Colors.accentLight,
+        borderRadius: 12,
+        color: Colors.white,
+        height: 50,
+        justifyContent: 'center',
+        width: 100,
+    },
+    stopTextButton: {
+        color: Colors.white,
+        fontWeight: 'bold',
     },
     triangle: {
         borderBottomColor: Colors.primary,
