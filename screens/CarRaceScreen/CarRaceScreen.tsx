@@ -192,6 +192,7 @@ export default function CarRaceScreen() {
     const startCar = () => {
         try {
             socket?.send(JSON.stringify(cmdStartCar));
+            console.log('start');
         } catch (e) {
             console.log(e);
         }
@@ -200,6 +201,7 @@ export default function CarRaceScreen() {
     const stopCar = () => {
         try {
             socket?.send(JSON.stringify(cmdStopCar));
+            console.log('stop');
         } catch (e) {
             console.log(e);
         }
@@ -422,7 +424,10 @@ const styles = StyleSheet.create({
 
     startAndStopControl: {
         alignItems: 'center',
+        // borderColor: Colors.primary,
+        // borderWidth: 2,
         flexDirection: 'row',
+        gap: 10,
         justifyContent: 'space-around',
         width: '100%',
     },
@@ -431,9 +436,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.green,
         borderRadius: 12,
         color: Colors.white,
+        flex: 1,
         height: 50,
         justifyContent: 'center',
-        width: 100,
     },
     startTextButton: {
         color: Colors.white,
@@ -444,9 +449,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.accentLight,
         borderRadius: 12,
         color: Colors.white,
+        flex: 1,
         height: 50,
         justifyContent: 'center',
-        width: 100,
     },
     stopTextButton: {
         color: Colors.white,
