@@ -22,6 +22,7 @@ const accentDark = '#802200';
 const greenLightFade = 'rgba(76, 175, 80, 0.15)';
 const green = '#4CAF50';
 const white = '#FFFFFF';
+const greyShadow = 'black';
 
 const Colors = {
     text: text,
@@ -43,6 +44,7 @@ const Colors = {
     greenLightFade: greenLightFade,
     green: green,
     white: white,
+    greyShadow: greyShadow,
 };
 
 export default Colors;

@@ -324,14 +324,18 @@ export default function CarRaceScreen() {
 const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
-        borderColor: Colors.primaryLight,
+        backgroundColor: Colors.primaryLight,
         borderRadius: 100,
-        borderWidth: 1,
+        // borderWidth: 1,
         elevation: 12,
         height: 86,
         justifyContent: 'center',
         margin: 10,
 
+        shadowColor: Colors.greyShadow,
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
         width: 86,
     },
     buttonPressed: {
@@ -424,10 +428,8 @@ const styles = StyleSheet.create({
 
     startAndStopControl: {
         alignItems: 'center',
-        // borderColor: Colors.primary,
-        // borderWidth: 2,
         flexDirection: 'row',
-        gap: 10,
+        gap: 24,
         justifyContent: 'space-around',
         width: '100%',
     },
@@ -439,23 +441,34 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 50,
         justifyContent: 'center',
+        shadowColor: Colors.greyShadow,
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
     },
     startTextButton: {
         color: Colors.white,
         fontWeight: 'bold',
+        textTransform: 'uppercase',
     },
     stopButton: {
         alignItems: 'center',
         backgroundColor: Colors.accentLight,
+
         borderRadius: 12,
         color: Colors.white,
         flex: 1,
         height: 50,
         justifyContent: 'center',
+        shadowColor: Colors.greyShadow,
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
     },
     stopTextButton: {
         color: Colors.white,
         fontWeight: 'bold',
+        textTransform: 'uppercase',
     },
     triangle: {
         borderBottomColor: Colors.primary,
