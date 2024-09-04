@@ -52,7 +52,7 @@ export default function StatisticsDetailsScreen() {
     const route = useRoute<RouteProp<RouteParams, 'params'>>();
     const { date, id } = route.params;
     const { data } = useGetStatisticsDetailsElements(id);
-    console.log("🚀 ~ StatisticsDetailsScreen ~ data:", data)
+    console.log('🚀 ~ StatisticsDetailsScreen ~ data:', data);
 
     const averageSpeedData = data?.data.speeds[0]?.speeds || [];
     const batteryActivityData = data?.data.battery[0]?.battery_level || [];
