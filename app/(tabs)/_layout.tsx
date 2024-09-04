@@ -13,6 +13,7 @@ import Colors from '@/styles/constants/Colors';
 export default function TabLayout() {
     const Tab = createBottomTabNavigator();
     const socket = useSocket();
+    const socketConnection = socket?.readyState === 1 ? false : true;
 
     return (
         <Tab.Navigator
@@ -46,7 +47,7 @@ export default function TabLayout() {
                     tabBarButton: (props) => (
                         <TouchableOpacity
                             {...props}
-                            disabled={!socket}
+                            disabled={socketConnection}
                             style={[
                                 props.style,
                                 {

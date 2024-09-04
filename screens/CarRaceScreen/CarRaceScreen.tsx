@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { useState, useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity, Switch } from 'react-native';
 
 import {
     GestureHandlerRootView,
@@ -20,12 +20,16 @@ const maxWheelValue = 4069;
 
 export default function CarRaceScreen() {
     const socket = useSocket();
+    console.log('🚀 ~ CarRaceScreen ~ socket:', socket.speed);
 
     const [forwardButtonPressed, setForwardButtonPressed] = useState(false);
     const [backwardButtonPressed, setBackwardButtonPressed] = useState(false);
 
     const [leftButtonPressed, setLeftButtonPressed] = useState(false);
     const [rightButtonPressed, setRightButtonPressed] = useState(false);
+
+    // const [handleCamera, setHandleCamera] = useState(false);
+    // const toggleSwitch = () => setHandleCamera((previousState) => !previousState);
 
     const handleForwardButtonEvent = (event: GestureHandlerStateChangeEvent) => {
         if (event.nativeEvent.state === State.BEGAN) {
@@ -170,15 +174,6 @@ export default function CarRaceScreen() {
         }
     };
 
-    useEffect(() => {
-        carMoveControl();
-    }, [
-        forwardButtonPressed,
-        backwardButtonPressed,
-        rightButtonPressed,
-        leftButtonPressed,
-        carMoveControl,
-    ]);
     const cmdStopCar = {
         cmd: '11',
     };
@@ -187,6 +182,24 @@ export default function CarRaceScreen() {
         cmd: '10',
         data: 1,
     };
+
+    // const cmdStartCamera = {
+    //     cmd: '9',
+    //     data: 1,
+    // };
+
+    // const cmdStopCamera = {
+    //     cmd: '9',
+    //     data: 0,
+    // };
+
+    // const handleCameraControl = () => {
+    //     if (handleCamera) {
+    //         socket?.send(JSON.stringify(cmdStartCamera));
+    //     } else {
+    //         socket?.send(JSON.stringify(cmdStopCamera));
+    //     }
+    // };
 
     const startCar = () => {
         try {
@@ -206,8 +219,28 @@ export default function CarRaceScreen() {
         }
     };
 
+
+    useEffect(() => {
+        carMoveControl();
+    }, [
+        forwardButtonPressed,
+        backwardButtonPressed,
+        rightButtonPressed,
+        leftButtonPressed,
+        carMoveControl,
+    ]);
+
+
+    const [handleCamera, setHandleCamera] = useState(false);
+
+
+    const toggleSwitch = () => setHandleCamera((previousState) => !previousState);
+
     return (
         <View style={styles.container}>
+            <View style={styles.handleCameraControl}>
+            <Switch onValueChange={toggleSwitch} value={handleCamera} /> 
+            </View>
             <View style={styles.controlScreen}>
                 <View style={styles.detailsBanner}>
                     <Text style={styles.detailsBannerText}>0:03:53s</Text>
@@ -225,6 +258,10 @@ export default function CarRaceScreen() {
                         <WebView
                             style={styles.video}
                             scalesPageToFit={true}
+                            startInLoadingState={true}
+                            
+                            renderError={() => <Text>Video not found</Text>}
+                            renderLoading={() => <ActivityIndicator size="large" color="#0000ff" />}
                             source={{ uri: socket.video_url }}
                         />
                     ) : (
@@ -240,6 +277,7 @@ export default function CarRaceScreen() {
                     <Text style={styles.stopTextButton}>Stop</Text>
                 </TouchableOpacity>
             </View>
+
             <GestureHandlerRootView style={styles.controlButtonsWrapper}>
                 <View>
                     <TapGestureHandler
@@ -410,6 +448,13 @@ const styles = StyleSheet.create({
         color: Colors.primary,
         marginBottom: 2,
         marginHorizontal: 3,
+    },
+    handleCameraControl: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        gap: 8,
+        justifyContent: 'flex-end',
+        width: '100%',
     },
 
     horizontalControl: {
