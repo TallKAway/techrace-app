@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import {
     GestureHandlerRootView,
@@ -10,6 +8,7 @@ import {
     State,
     TapGestureHandler,
 } from 'react-native-gesture-handler';
+
 import { WebView } from 'react-native-webview';
 
 import BatteryIcon from '@/components/design-system/icons/Battery';
