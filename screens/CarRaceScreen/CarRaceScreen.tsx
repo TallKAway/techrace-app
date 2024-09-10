@@ -20,7 +20,6 @@ const maxWheelValue = 4069;
 
 export default function CarRaceScreen() {
     const socket = useSocket();
-    console.log('🚀 ~ CarRaceScreen ~ socket:', socket.speed);
 
     const [forwardButtonPressed, setForwardButtonPressed] = useState(false);
     const [backwardButtonPressed, setBackwardButtonPressed] = useState(false);
