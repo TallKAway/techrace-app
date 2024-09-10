@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import { useState, useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity, Switch } from 'react-native';
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import {
     GestureHandlerRootView,
@@ -27,9 +27,6 @@ export default function CarRaceScreen() {
 
     const [leftButtonPressed, setLeftButtonPressed] = useState(false);
     const [rightButtonPressed, setRightButtonPressed] = useState(false);
-
-    // const [handleCamera, setHandleCamera] = useState(false);
-    // const toggleSwitch = () => setHandleCamera((previousState) => !previousState);
 
     const handleForwardButtonEvent = (event: GestureHandlerStateChangeEvent) => {
         if (event.nativeEvent.state === State.BEGAN) {
@@ -183,24 +180,6 @@ export default function CarRaceScreen() {
         data: 1,
     };
 
-    // const cmdStartCamera = {
-    //     cmd: '9',
-    //     data: 1,
-    // };
-
-    // const cmdStopCamera = {
-    //     cmd: '9',
-    //     data: 0,
-    // };
-
-    // const handleCameraControl = () => {
-    //     if (handleCamera) {
-    //         socket?.send(JSON.stringify(cmdStartCamera));
-    //     } else {
-    //         socket?.send(JSON.stringify(cmdStopCamera));
-    //     }
-    // };
-
     const startCar = () => {
         try {
             socket?.send(JSON.stringify(cmdStartCar));
@@ -219,7 +198,6 @@ export default function CarRaceScreen() {
         }
     };
 
-
     useEffect(() => {
         carMoveControl();
     }, [
@@ -230,17 +208,8 @@ export default function CarRaceScreen() {
         carMoveControl,
     ]);
 
-
-    const [handleCamera, setHandleCamera] = useState(false);
-
-
-    const toggleSwitch = () => setHandleCamera((previousState) => !previousState);
-
     return (
         <View style={styles.container}>
-            <View style={styles.handleCameraControl}>
-            <Switch onValueChange={toggleSwitch} value={handleCamera} /> 
-            </View>
             <View style={styles.controlScreen}>
                 <View style={styles.detailsBanner}>
                     <Text style={styles.detailsBannerText}>0:03:53s</Text>
@@ -259,7 +228,6 @@ export default function CarRaceScreen() {
                             style={styles.video}
                             scalesPageToFit={true}
                             startInLoadingState={true}
-                            
                             renderError={() => <Text>Video not found</Text>}
                             renderLoading={() => <ActivityIndicator size="large" color="#0000ff" />}
                             source={{ uri: socket.video_url }}
@@ -448,13 +416,6 @@ const styles = StyleSheet.create({
         color: Colors.primary,
         marginBottom: 2,
         marginHorizontal: 3,
-    },
-    handleCameraControl: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        gap: 8,
-        justifyContent: 'flex-end',
-        width: '100%',
     },
 
     horizontalControl: {

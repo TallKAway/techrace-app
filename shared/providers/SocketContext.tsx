@@ -25,8 +25,6 @@ export const SocketProvider = ({ children }: { children: ReactNode }) => {
         console.log('WebSocket connection established');
     };
 
-
-
     socket.onmessage = ({ data }) => {
         const { speed, battery, videoUrl } = JSON.parse(data);
         socket.speed = speed;
