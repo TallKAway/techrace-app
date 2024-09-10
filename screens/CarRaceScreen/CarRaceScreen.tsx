@@ -228,11 +228,11 @@ export default function CarRaceScreen() {
                             scalesPageToFit={true}
                             startInLoadingState={true}
                             renderError={() => <Text>Video not found</Text>}
-                            renderLoading={() => <ActivityIndicator size="large" color="#0000ff" />}
+                            renderLoading={() => <ActivityIndicator size="large" color="#1E90FF" />}
                             source={{ uri: socket.video_url }}
                         />
                     ) : (
-                        <ActivityIndicator size="large" color="#0000ff" />
+                        <ActivityIndicator size="large" color="#1E90FF" />
                     )}
                 </View>
             </View>
