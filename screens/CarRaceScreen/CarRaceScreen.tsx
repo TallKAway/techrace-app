@@ -384,6 +384,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.primary,
         borderRadius: 32,
         borderWidth: 2,
+        height: 282,
         justifyContent: 'center',
         marginBottom: 28,
         marginTop: 10,
@@ -426,10 +427,10 @@ const styles = StyleSheet.create({
     rotatedLeftButton: {
         transform: [{ rotate: '30deg' }],
     },
+
     rotatedRightButton: {
         transform: [{ rotate: '90deg' }],
     },
-
     startAndStopControl: {
         alignItems: 'center',
         flexDirection: 'row',
@@ -484,7 +485,7 @@ const styles = StyleSheet.create({
     },
     video: {
         borderRadius: 12,
-        height: 10,
+        height: 200,
         marginTop: 40,
         maxHeight: 240,
         overflow: 'hidden',
