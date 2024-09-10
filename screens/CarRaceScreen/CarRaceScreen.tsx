@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import 'react-native-gesture-handler';
+import { useState, useEffect } from 'react';
+import { ActivityIndicator, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 import {
     GestureHandlerRootView,
@@ -8,6 +8,7 @@ import {
     State,
     TapGestureHandler,
 } from 'react-native-gesture-handler';
+
 import { WebView } from 'react-native-webview';
 
 import BatteryIcon from '@/components/design-system/icons/Battery';
@@ -169,6 +170,33 @@ export default function CarRaceScreen() {
         }
     };
 
+    const cmdStopCar = {
+        cmd: '11',
+    };
+
+    const cmdStartCar = {
+        cmd: '10',
+        data: 1,
+    };
+
+    const startCar = () => {
+        try {
+            socket?.send(JSON.stringify(cmdStartCar));
+            console.log('start');
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const stopCar = () => {
+        try {
+            socket?.send(JSON.stringify(cmdStopCar));
+            console.log('stop');
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
     useEffect(() => {
         carMoveControl();
     }, [
@@ -198,12 +226,23 @@ export default function CarRaceScreen() {
                         <WebView
                             style={styles.video}
                             scalesPageToFit={true}
+                            startInLoadingState={true}
+                            renderError={() => <Text>Video not found</Text>}
+                            renderLoading={() => <ActivityIndicator size="large" color="#1E90FF" />}
                             source={{ uri: socket.video_url }}
                         />
                     ) : (
-                        <ActivityIndicator size="large" color="#0000ff" />
+                        <ActivityIndicator size="large" color="#1E90FF" />
                     )}
                 </View>
+            </View>
+            <View style={styles.startAndStopControl}>
+                <TouchableOpacity style={styles.startButton} onPress={startCar}>
+                    <Text style={styles.startTextButton}>Start</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.stopButton} onPress={stopCar}>
+                    <Text style={styles.stopTextButton}>Stop</Text>
+                </TouchableOpacity>
             </View>
 
             <GestureHandlerRootView style={styles.controlButtonsWrapper}>
@@ -289,12 +328,18 @@ export default function CarRaceScreen() {
 const styles = StyleSheet.create({
     button: {
         alignItems: 'center',
-        borderColor: Colors.primary,
+        backgroundColor: Colors.white,
         borderRadius: 100,
-        borderWidth: 2,
+        // borderWidth: 1,
+        elevation: 12,
         height: 86,
         justifyContent: 'center',
         margin: 10,
+
+        shadowColor: Colors.greyShadow,
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
         width: 86,
     },
     buttonPressed: {
@@ -339,6 +384,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.primary,
         borderRadius: 32,
         borderWidth: 2,
+        height: 282,
         justifyContent: 'center',
         marginBottom: 28,
         marginTop: 10,
@@ -381,8 +427,52 @@ const styles = StyleSheet.create({
     rotatedLeftButton: {
         transform: [{ rotate: '30deg' }],
     },
+
     rotatedRightButton: {
         transform: [{ rotate: '90deg' }],
+    },
+    startAndStopControl: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        gap: 24,
+        justifyContent: 'space-around',
+        width: '100%',
+    },
+    startButton: {
+        alignItems: 'center',
+        backgroundColor: Colors.green,
+        borderRadius: 12,
+        color: Colors.white,
+        flex: 1,
+        height: 50,
+        justifyContent: 'center',
+        shadowColor: Colors.greyShadow,
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+    },
+    startTextButton: {
+        color: Colors.white,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
+    },
+    stopButton: {
+        alignItems: 'center',
+        backgroundColor: Colors.accentLight,
+        borderRadius: 12,
+        color: Colors.white,
+        flex: 1,
+        height: 50,
+        justifyContent: 'center',
+        shadowColor: Colors.greyShadow,
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 6,
+    },
+    stopTextButton: {
+        color: Colors.white,
+        fontWeight: 'bold',
+        textTransform: 'uppercase',
     },
     triangle: {
         borderBottomColor: Colors.primary,
@@ -395,7 +485,7 @@ const styles = StyleSheet.create({
     },
     video: {
         borderRadius: 12,
-        height: 10,
+        height: 200,
         marginTop: 40,
         maxHeight: 240,
         overflow: 'hidden',
